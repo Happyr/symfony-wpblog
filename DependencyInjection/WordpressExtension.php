@@ -27,10 +27,10 @@ class WordpressExtension extends Extension
         $loader->load('services.yaml');
 
         $container->getDefinition(WpClient::class)
-            ->replaceArgument(2, new Reference($config['url']));
+            ->replaceArgument(2, rtrim($config['url'], '/'));
 
         $container->getDefinition(Wordpress::class)
             ->replaceArgument(2, new Reference($config['cache']['service']))
-            ->replaceArgument(3, new Reference($config['cache']['ttl']));
+            ->replaceArgument(3, $config['cache']['ttl']);
     }
 }

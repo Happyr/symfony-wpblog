@@ -27,6 +27,11 @@ class WpClient
         $this->httpClient = $httpClient;
     }
 
+    public function getPostList(string $query): array
+    {
+        $request = $this->requestFactory->createRequest('GET', $this->baseUrl.'/posts'.$query);
+        $response = $this->httpClient->sendRequest($request);
+    }
 
     public function getPage(string $slug): array
     {

@@ -31,10 +31,33 @@ class Wordpress
         $this->ttl = $ttl;
     }
 
+    /**
+     * Get a list of posts. Ie for the start page. Feel free to pass any query to
+     * Wordpress API.
+     */
+    public function listPosts(string $query = ''): array
+    {
+        return $this->cache->get('post_query_'.$query, function (ItemInterface $item) use ($query) {
+            $data = $this->client->getPostList($query);
+            if (empty($data)) {
+                $item->expiresAfter(30);
+                return null;
+            }
+
+            $item->expiresAfter($this->ttl);
+            $pages = [];
+            foreach($data as $d) {
+                $pages[] = $this->messageParser->parsePage($d);
+            }
+
+            return $pages;
+        });
+    }
+
     public function getPage(string $slug): ?Page
     {
-        return $this->cache->get($slug, function (ItemInterface $item) {
-            $data = $this->client->getPage($item->getKey());
+        return $this->cache->get('page_'.$slug, function (ItemInterface $item) use ($slug) {
+            $data = $this->client->getPage($slug);
             if (empty($data)) {
                 $item->expiresAfter(300);
                 return null;
@@ -48,8 +71,8 @@ class Wordpress
 
     public function getMenu(string $slug): ?Menu
     {
-        return $this->cache->get($slug, function (ItemInterface $item) {
-            $data = $this->client->getMenu($item->getKey());
+        return $this->cache->get('menu_'.$slug, function (ItemInterface $item) use ($slug) {
+            $data = $this->client->getMenu($slug);
             if (empty($data)) {
                 $item->expiresAfter(300);
                 return null;
@@ -59,5 +82,21 @@ class Wordpress
 
             return $this->messageParser->parseMenu($data);
         });
+    }
+
+    /**
+     * Purge cache for pages and menus
+     */
+    public function purgeCache(string $slug): void
+    {
+        // Make sure to expire item
+        $callback = function (ItemInterface $item) {
+            $item->expiresAfter(0);
+        };
+
+        // Get item and force recompute.
+        $this->cache->get('page_'.$slug, $callback, INF);
+        $this->cache->get('menu_'.$slug, $callback, INF);
+        $this->cache->get('post_query_', $callback, INF);
     }
 }

@@ -3,7 +3,7 @@ services:
     arguments: ['@Psr\Http\Client\ClientInterface', '@Psr\Http\Message\RequestFactoryInterface', ~]
 
   Happyr\WordpressBundle\Service\MessageParser:
-    arguments: []
+    arguments: ['@event_dispatcher']
 
   Happyr\WordpressBundle\Service\Wordpress:
     arguments: ['@Happyr\WordpressBundle\Api\WpClient', '@Happyr\WordpressBundle\Service\MessageParser',  ~, ~]

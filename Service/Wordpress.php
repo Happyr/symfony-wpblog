@@ -25,9 +25,9 @@ class Wordpress
 
     public function __construct(WpClient $client, MessageParser $parser, CacheInterface $cache, int $ttl)
     {
-        $this->cache = $cache;
         $this->client = $client;
         $this->messageParser = $parser;
+        $this->cache = $cache;
         $this->ttl = $ttl;
     }
 
@@ -37,7 +37,7 @@ class Wordpress
      */
     public function listPosts(string $query = ''): array
     {
-        return $this->cache->get('post_query_'.$query, function (ItemInterface $item) use ($query) {
+        return $this->cache->get('post_query_'.$query, function (/*ItemInterface*/ $item) use ($query) {
             $data = $this->client->getPostList($query);
             if (empty($data)) {
                 $item->expiresAfter(30);
@@ -56,7 +56,7 @@ class Wordpress
 
     public function getPage(string $slug): ?Page
     {
-        return $this->cache->get('page_'.$slug, function (ItemInterface $item) use ($slug) {
+        return $this->cache->get('page_'.$slug, function (/*ItemInterface*/ $item) use ($slug) {
             $data = $this->client->getPage($slug);
             if (empty($data)) {
                 $item->expiresAfter(300);
@@ -71,7 +71,7 @@ class Wordpress
 
     public function getMenu(string $slug): ?Menu
     {
-        return $this->cache->get('menu_'.$slug, function (ItemInterface $item) use ($slug) {
+        return $this->cache->get('menu_'.$slug, function (/*ItemInterface*/ $item) use ($slug) {
             $data = $this->client->getMenu($slug);
             if (empty($data)) {
                 $item->expiresAfter(300);

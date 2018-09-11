@@ -1,6 +1,12 @@
 services:
-  Happyr\WordpressBundle\Api\WordpressClient:
-    arguments: ['@http_client', ~]
+  Happyr\WordpressBundle\Api\WpClient:
+    arguments: ['@Psr\Http\Client\ClientInterface', '@Psr\Http\Message\RequestFactoryInterface', ~]
+
+  Happyr\WordpressBundle\Service\MessageParser:
+    arguments: []
+
+  Happyr\WordpressBundle\Service\Wordpress:
+    arguments: ['@Happyr\WordpressBundle\Api\WpClient', '@Happyr\WordpressBundle\Service\MessageParser',  ~, ~]
 
   Happyr\WordpressBundle\Twig\WordpressExtension:
     arguments: ['@Happyr\WordpressBundle\Api\WordpressClient']

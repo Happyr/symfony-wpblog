@@ -25,7 +25,7 @@ class Configuration implements ConfigurationInterface
             ->arrayNode('cache')
                 ->children()
                     ->scalarNode('service')->cannotBeEmpty()->isRequired()->end()
-                    ->integerNode('timeout')->defaultValue(3600)->end()
+                    ->integerNode('ttl')->defaultValue(3600)->end()
                 ->end()
             ->end()
         ->end();

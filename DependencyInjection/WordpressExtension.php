@@ -2,7 +2,8 @@
 
 namespace Happyr\WordpressBundle\DependencyInjection;
 
-use Happyr\WordpressBundle\Api\WordpressClient;
+use Happyr\WordpressBundle\Api\WpClient;
+use Happyr\WordpressBundle\Service\Wordpress;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -25,7 +26,11 @@ class WordpressExtension extends Extension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yaml');
 
-        $container->getDefinition(WordpressClient::class)
-            ->replaceArgument(1, new Reference($config['cache']['service']));
+        $container->getDefinition(WpClient::class)
+            ->replaceArgument(2, new Reference($config['url']));
+
+        $container->getDefinition(Wordpress::class)
+            ->replaceArgument(2, new Reference($config['cache']['service']))
+            ->replaceArgument(3, new Reference($config['cache']['ttl']));
     }
 }

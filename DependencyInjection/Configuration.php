@@ -18,14 +18,18 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('wordpress');
-        $rootNode->children()
-            ->scalarNode('url')->cannotBeEmpty()->end()
+        $root = $treeBuilder->root('wordpress');
+
+        $root->children()
+            ->scalarNode('url')->cannotBeEmpty()->isRequired()->end()
             ->arrayNode('cache')
                 ->children()
-                    ->scalarNode('service')->cannotBeEmpty()->end()
+                    ->scalarNode('service')->cannotBeEmpty()->isRequired()->end()
                     ->integerNode('timeout')->defaultValue(3600)->end()
                 ->end()
-            ->end();
+            ->end()
+        ->end();
+
+        return $treeBuilder;
     }
 }

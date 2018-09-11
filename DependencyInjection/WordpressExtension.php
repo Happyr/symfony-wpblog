@@ -23,7 +23,7 @@ class WordpressExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.yml');
+        $loader->load('services.yaml');
 
         $container->getDefinition(WordpressClient::class)
             ->replaceArgument(1, new Reference($config['cache']['service']));

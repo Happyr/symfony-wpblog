@@ -3,4 +3,4 @@ services:
     arguments: ['@http_client', ~]
 
   Happyr\WordpressBundle\Twig\WordpressExtension:
-    arguments: ["@Happyr\WordpressBundle\Api\WordpressClient"]
+    arguments: ['@Happyr\WordpressBundle\Api\WordpressClient']

@@ -21,6 +21,11 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('wordpress');
         $rootNode->children()
             ->scalarNode('url')->cannotBeEmpty()->end()
+            ->arrayNode('cache')
+                ->children()
+                    ->scalarNode('service')->cannotBeEmpty()->end()
+                    ->integerNode('timeout')->defaultValue(3600)->end()
+                ->end()
             ->end();
     }
 }

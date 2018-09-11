@@ -22,8 +22,5 @@ class Configuration implements ConfigurationInterface
         $rootNode->children()
             ->scalarNode('url')->cannotBeEmpty()->end()
             ->end();
-
-
     }
-
 }

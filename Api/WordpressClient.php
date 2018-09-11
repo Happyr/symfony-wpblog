@@ -16,11 +16,9 @@ class WordpressClient
 
     public function getPage($idOrSlug): Page
     {
-
     }
 
     public function getMenu($idOrSlug): Menu
     {
-
     }
 }

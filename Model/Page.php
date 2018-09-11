@@ -6,5 +6,4 @@ namespace Happyr\WordpressBundle\Model;
 
 class Page
 {
-
 }

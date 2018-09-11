@@ -6,5 +6,4 @@ namespace Happyr\WordpressBundle\Twig;
 
 class WordpressExtension
 {
-
 }

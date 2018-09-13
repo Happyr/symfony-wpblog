@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace Happyr\WordpressBundle\Parser;
 
-use Happyr\WordpressBundle\Event\PageEvent;
+use Happyr\WordpressBundle\Model\Menu;
 use Happyr\WordpressBundle\Model\Page;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class RewriteLinks implements PageParserInterface
+class RewriteLinks implements PageParserInterface, MenuParserInterface
 {
     private $remoteUrl;
     private $urlGenerator;
@@ -23,23 +22,24 @@ class RewriteLinks implements PageParserInterface
         $this->urlGenerator = $urlGenerator;
     }
 
-
-
     public function parsePage(Page $page): void
     {
         $page->setContent($this->rewrite($page->getContent()));
         $page->setExcerpt($this->rewrite($page->getExcerpt()));
     }
 
+    public function parseMenu(Menu $menu): void
+    {
+        // TODO: Implement parseMenu() method.
+    }
 
     private function rewrite(string $content): string
     {
-        if (!preg_match_all('|href=(?P<quote>[\'"])(.+?)(?P=quote)|sim', $content, $matches)) {
+        if (!preg_match_all('|href=(?P<quote>[\'"])(.+?)(?P=quote)|si', $content, $matches)) {
             return $content;
         }
 
         for ($i = 0; $i < count($matches[0]); $i++) {
-            // TODO figure out if this should be replaced or not
             $url = $matches[2][$i];
             $testUrl = parse_url($url);
             $remoteUrl = parse_url($this->remoteUrl);

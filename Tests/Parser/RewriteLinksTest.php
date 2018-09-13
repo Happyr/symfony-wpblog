@@ -49,13 +49,13 @@ class RewriteLinksTest extends TestCase
     {
         $apiUrl = 'http://wordpress.com/wp-json/wp/v2/';
         $routeParams = ['slug' => 'foobar'];
-        $newUrl = 'http://new-url.com/foobar';
+        $newUrl = 'https://new-url.com/foobar';
         $input = '<b><a class="xx" href="http://wordpress.com/page/foobar">Click me</a></span>';
-        $output = '<b><a class="xx" href="http://new-url.com/foobar">Click me</a></span>';
+        $output = '<b><a class="xx" href="https://new-url.com/foobar">Click me</a></span>';
 
         yield [$input, $output, $apiUrl, $newUrl, $routeParams];
         yield ['<b><a class="xx" href="http://wordpress.com/post/foobar">Click me</a></span>', $output, $apiUrl, $newUrl, $routeParams];
-        yield ['<a class="xx" href="http://wordpress.com/page/foo/bar">Click me</a>', '<a class="xx" href="http://new-url.com/foo/bar">Click me</a>', $apiUrl, 'http://new-url.com/foo/bar', ['slug' => 'foo/bar']];
-        yield ['<a class="xx" href=\'http://wordpress.com/page/foobar\'>Click me</a>', '<a class="xx" href=\'http://new-url.com/foobar\'>Click me</a>', $apiUrl, $newUrl, $routeParams];
+        yield ['<a class="xx" href="http://wordpress.com/page/foo/bar">Click me</a>', '<a class="xx" href="https://new-url.com/foo/bar">Click me</a>', $apiUrl, 'https://new-url.com/foo/bar', ['slug' => 'foo/bar']];
+        yield ['<a class="xx" href=\'http://wordpress.com/page/foobar\'>Click me</a>', '<a class="xx" href=\'https://new-url.com/foobar\'>Click me</a>', $apiUrl, $newUrl, $routeParams];
     }
 }

@@ -4,19 +4,14 @@ declare(strict_types=1);
 
 namespace Happyr\WordpressBundle\Parser;
 
-use Happyr\WordpressBundle\Model\Menu;
 use Happyr\WordpressBundle\Model\Page;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
- * This parser will rewrite all URLs. This is a "fallback" that handles
- * everything.
- *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class RewriteUrls implements PageParserInterface
+class RewriteLinks implements PageParserInterface
 {
-
     private $remoteUrl;
     private $urlGenerator;
 
@@ -30,25 +25,30 @@ class RewriteUrls implements PageParserInterface
     {
         $page->setContent($this->rewrite($page->getContent()));
         $page->setExcerpt($this->rewrite($page->getExcerpt()));
+        // TODO featured media?
     }
 
-    public function parseMenu(Menu $menu): void
-    {
-        // TODO: Implement parseMenu() method.
-    }
 
     private function rewrite(string $content): string
     {
-        // Find current URL host
-        $url = $this->urlGenerator->generate('wp_page', ['slug'=>'foo']);
-        $localParts = parse_url($url);
+        if (!preg_match_all('|src=(?P<quote>[\'"])(.+?)(?P=quote)|si', $content, $matches)) {
+            return $content;
+        }
 
-        $remoteParts = parse_url($this->remoteUrl);
+        for ($i = 0; $i < count($matches[0]); $i++) {
+            $url = $matches[2][$i];
+            $testUrl = parse_url($url);
+            $remoteUrl = parse_url($this->remoteUrl);
+            if ($testUrl['host'] !== $remoteUrl['host']) {
+                continue;
+            }
 
-        $buildUrl = function ($parts) {
-            return sprintf('%s://%s', $parts['scheme'], $parts['host']);
-        };
+            // TODO download the media and store it somewhere good.
+            // TODO rewrite the URL.
 
-        return str_replace($buildUrl($remoteParts), $buildUrl($localParts), $content);
+        }
+
+        return $content;
     }
+
 }

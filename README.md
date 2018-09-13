@@ -10,10 +10,23 @@ each request so your blog do not get overwhelmed with requests.
 
 ## WordPress configuration
 
+### Rewriting links
+
 We need to rewrite absolute URLs from WordPress. To make things easier for us, please
 set your page and post url prefix to "page" and "post" respectively. 
 
-(Image)
+(TODO add image)
+
+### Invalidate cache
+
+You should configure Symfony to be very aggressive when caching resources from
+WordPress. But when an editor makes an update you need to invalidate the cache
+and redownload the updated resource. 
+
+The Symfony bundle provides an endpoint to invalidate cache. You should use this
+endpoint when a post in updated and deleted. 
+
+(TODO add a small wordpress plugin for this in `Resources/Wordpress`) 
 
 ## Symfony installation
 

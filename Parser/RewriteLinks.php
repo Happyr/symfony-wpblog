@@ -39,10 +39,10 @@ class RewriteLinks implements PageParserInterface, MenuParserInterface
             return $content;
         }
 
+        $remoteUrl = parse_url($this->remoteUrl);
         for ($i = 0; $i < count($matches[0]); $i++) {
             $url = $matches[2][$i];
             $testUrl = parse_url($url);
-            $remoteUrl = parse_url($this->remoteUrl);
             if ($testUrl['host'] !== $remoteUrl['host']) {
                 continue;
             }

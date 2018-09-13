@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Happyr\WordpressBundle\Parser;
 
 use Happyr\WordpressBundle\Model\Page;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Happyr\WordpressBundle\Service\ImageUploaderInterface;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -13,12 +13,12 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class RewriteImageReferences implements PageParserInterface
 {
     private $remoteUrl;
-    private $urlGenerator;
+    private $imageUploader;
 
-    public function __construct(string $remoteUrl, UrlGeneratorInterface $urlGenerator)
+    public function __construct(string $remoteUrl, ImageUploaderInterface $imageUploader)
     {
         $this->remoteUrl = $remoteUrl;
-        $this->urlGenerator = $urlGenerator;
+        $this->imageUploader = $imageUploader;
     }
 
     public function parsePage(Page $page): void
@@ -31,21 +31,24 @@ class RewriteImageReferences implements PageParserInterface
 
     private function rewrite(string $content): string
     {
-        if (!preg_match_all('|src=(?P<quote>[\'"])(.+?)(?P=quote)|si', $content, $matches)) {
+        if (!preg_match_all('|<img[^>]+src=(?P<quote>[\'"])(.+?)(?P=quote)|sim', $content, $matches)) {
             return $content;
         }
+
+        $remoteUrl = parse_url($this->remoteUrl);
 
         for ($i = 0; $i < count($matches[0]); $i++) {
             $url = $matches[2][$i];
             $testUrl = parse_url($url);
-            $remoteUrl = parse_url($this->remoteUrl);
-            if ($testUrl['host'] !== $remoteUrl['host']) {
+            if (!empty($testUrl['host']) && $testUrl['host'] !== $remoteUrl['host']) {
                 continue;
             }
 
-            // TODO download the media and store it somewhere good.
-            // TODO rewrite the URL.
+            // download the media and store it somewhere good.
+            $replacement = $this->imageUploader->uploadImage($url);
 
+            // rewrite the URL.
+            $content = str_replace($url, $replacement, $content);
         }
 
         return $content;

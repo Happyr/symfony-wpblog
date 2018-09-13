@@ -1,0 +1,19 @@
+{% extends "@Wordpress/base.html.twig" %}
+
+{% block body %}
+    <h1>Post index</h1>
+    <div class="post-list">
+    {% for page in pages %}
+        <div class="post">
+            <div class="post-title">
+                <a href="{{ path('happyr_wordpress_page', {slug: page.slug}) }}">
+                    <h2>{{ page.title }}</h2>
+                </a>
+            </div>
+            <div class="post-excerpt">
+                {{ page.excerpt|raw }}
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}

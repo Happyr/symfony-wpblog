@@ -28,6 +28,12 @@ class Configuration implements ConfigurationInterface
                     ->integerNode('ttl')->defaultValue(3600)->end()
                 ->end()
             ->end()
+            ->arrayNode('controller')
+                ->canBeDisabled()
+                ->children()
+                    ->scalarNode('index_template')->defaultValue('@Wordpress/index.html.twig')->end()
+                    ->scalarNode('page_template')->defaultValue('@Wordpress/page.html.twig')->end()
+                ->end()
         ->end();
 
         return $treeBuilder;

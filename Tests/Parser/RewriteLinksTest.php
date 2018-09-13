@@ -22,7 +22,7 @@ class RewriteLinksTest extends TestCase
             ->getMock();
         $router->expects($this->once())
             ->method('generate')
-            ->with('wp_page', $routeParams)
+            ->with('happyr_wordpress_page', $routeParams)
             ->willReturn($newUrl);
 
         $page = $this->getMockBuilder(Page::class)->getMock();

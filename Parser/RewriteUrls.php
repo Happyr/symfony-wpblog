@@ -40,7 +40,7 @@ class RewriteUrls implements PageParserInterface
     private function rewrite(string $content): string
     {
         // Find current URL host
-        $url = $this->urlGenerator->generate('wp_page', ['slug'=>'foo']);
+        $url = $this->urlGenerator->generate('happyr_wordpress_page', ['slug'=>'foo']);
         $localParts = parse_url($url);
 
         $remoteParts = parse_url($this->remoteUrl);

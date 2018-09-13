@@ -11,6 +11,13 @@ services:
   Happyr\WordpressBundle\Twig\WordpressExtension:
     arguments: ['@Happyr\WordpressBundle\Service\Wordpress']
 
+
+  # ---- Parsers ----
+
   Happyr\WordpressBundle\Parser\RewriteLinks:
+    arguments: ['%happyr_wordpress.remote_url%', '@router']
+    tags: ['happyr_wordpress.parser.page']
+
+  Happyr\WordpressBundle\Parser\RewriteUrls:
     arguments: ['%happyr_wordpress.remote_url%', '@router']
     tags: ['happyr_wordpress.parser.page']

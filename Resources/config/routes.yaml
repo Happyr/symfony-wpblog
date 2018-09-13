@@ -1,0 +1,7 @@
+happyr_wordpress_index:
+    path: /
+    controller: Happyr\WordpressBundle\Controller\WordpressController::index
+
+happyr_wordpress_page:
+    path: /{slug}
+    controller: Happyr\WordpressBundle\Controller\WordpressController::show

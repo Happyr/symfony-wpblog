@@ -13,3 +13,14 @@ each request so your blog do not get overwhelmed with requests.
 We need to rewrite absolute URLs from WordPress. To make things easier for us, please
 set your page and post url prefix to "page" and "post" respectively. 
 
+## Symfony installation
+
+- Include routes (names are important)
+- Configure templates
+
+
+```yaml
+# config/routes.yaml
+wordpress:
+    resource: '@WordpressBundle/Resources/config/routes.yaml'
+```

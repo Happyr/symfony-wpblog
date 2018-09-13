@@ -6,6 +6,7 @@ namespace Happyr\WordpressBundle\Controller;
 
 use Happyr\WordpressBundle\Service\Wordpress;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Simple controller for index and page
@@ -17,12 +18,14 @@ final class WordpressController extends Controller
     private $wordpress;
     private $indexTemplate;
     private $pageTemplate;
+    private $allowInvalidate;
 
-    public function __construct(Wordpress $wordpress, string $indexTemplate, string $pageTemplate)
+    public function __construct(Wordpress $wordpress, string $indexTemplate, string $pageTemplate, bool $allowInvalidate)
     {
         $this->wordpress = $wordpress;
         $this->indexTemplate = $indexTemplate;
         $this->pageTemplate = $pageTemplate;
+        $this->allowInvalidate = $allowInvalidate;
     }
 
     public function index()
@@ -39,5 +42,12 @@ final class WordpressController extends Controller
         }
 
         return $this->render($this->pageTemplate, ['page'=>$page]);
+    }
+
+    public function invalidate($slug)
+    {
+        $this->wordpress->purgeCache($slug);
+
+        return new Response('', 204);
     }
 }

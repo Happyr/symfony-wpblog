@@ -33,6 +33,7 @@ class Configuration implements ConfigurationInterface
                 ->children()
                     ->scalarNode('index_template')->defaultValue('@Wordpress/index.html.twig')->end()
                     ->scalarNode('page_template')->defaultValue('@Wordpress/page.html.twig')->end()
+                    ->booleanNode('allow_invalidate')->defaultTrue()->info('Add an endpoint for invalidating pages')->end()
                 ->end()
         ->end();
 

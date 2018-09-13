@@ -34,7 +34,8 @@ class WordpressExtension extends Extension
             $loader->load('controller.yaml');
             $container->getDefinition(WordpressController::class)
                 ->replaceArgument(1, $config['controller']['index_template'])
-                ->replaceArgument(2, $config['controller']['page_template']);
+                ->replaceArgument(2, $config['controller']['page_template'])
+                ->replaceArgument(3, $config['controller']['allow_invalidate']);
         }
 
         $container->getDefinition(Wordpress::class)

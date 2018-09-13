@@ -1,4 +1,4 @@
 services:
     Happyr\WordpressBundle\Controller\WordpressController:
-        arguments: ['@Happyr\WordpressBundle\Service\Wordpress', ~, ~]
+        arguments: ['@Happyr\WordpressBundle\Service\Wordpress', ~, ~, ~]
         tags: ['controller.service_arguments']

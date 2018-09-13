@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class RewriteLinks implements PageParserInterface
+class RewriteImageReferences implements PageParserInterface
 {
     private $remoteUrl;
     private $urlGenerator;

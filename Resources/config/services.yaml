@@ -11,11 +11,18 @@ services:
   Happyr\WordpressBundle\Twig\WordpressExtension:
     arguments: ['@Happyr\WordpressBundle\Service\Wordpress']
 
+  Happyr\WordpressBundle\Service\LocalImageUploader:
+    arguments: [~, ~]
+
 
   # ---- Parsers ----
 
   Happyr\WordpressBundle\Parser\RewriteLinks:
     arguments: ['%happyr_wordpress.remote_url%', '@router']
+    tags: ['happyr_wordpress.parser.page']
+
+  Happyr\WordpressBundle\Parser\RewriteImageReferences:
+    arguments: ['%happyr_wordpress.remote_url%', ~]
     tags: ['happyr_wordpress.parser.page']
 
   Happyr\WordpressBundle\Parser\RewriteUrls:

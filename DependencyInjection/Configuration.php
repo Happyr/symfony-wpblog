@@ -2,6 +2,7 @@
 
 namespace Happyr\WordpressBundle\DependencyInjection;
 
+use Happyr\WordpressBundle\Service\LocalImageUploader;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -35,6 +36,33 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('page_template')->defaultValue('@Wordpress/page.html.twig')->end()
                     ->booleanNode('allow_invalidate')->defaultTrue()->info('Add an endpoint for invalidating pages')->end()
                 ->end()
+            ->end()
+            ->arrayNode('local_image_uploader')
+                ->canBeDisabled()
+                ->children()
+                    ->scalarNode('local_path')->defaultValue('%kernel.project_dir%/public/uploads')->end()
+                    ->scalarNode('public_prefix')->defaultValue('/uploads')->end()
+                ->end()
+            ->end()
+            ->arrayNode('parser')
+                ->addDefaultsIfNotSet()
+                ->children()
+                    ->arrayNode('image')
+                        ->canBeDisabled()
+                        ->children()
+                            ->scalarNode('uploader')->defaultValue(LocalImageUploader::class)->end()
+                        ->end()
+                    ->end()
+                    ->arrayNode('link')
+                        ->canBeDisabled()
+                        ->children()->end()
+                    ->end()
+                    ->arrayNode('url')
+                        ->canBeDisabled()
+                        ->children()->end()
+                    ->end()
+                ->end()
+            ->end()
         ->end();
 
         return $treeBuilder;

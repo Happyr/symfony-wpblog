@@ -3,7 +3,7 @@ services:
     arguments: ['@Psr\Http\Client\ClientInterface', '@Psr\Http\Message\RequestFactoryInterface', '%happyr_wordpress.remote_url%']
 
   Happyr\WordpressBundle\Parser\MessageParser:
-    arguments: ['@event_dispatcher']
+    arguments: [!tagged happyr_wordpress.parser.page, !tagged happyr_wordpress.parser.menu]
 
   Happyr\WordpressBundle\Service\Wordpress:
     arguments: ['@Happyr\WordpressBundle\Api\WpClient', '@Happyr\WordpressBundle\Parser\MessageParser',  ~, ~]
@@ -13,4 +13,4 @@ services:
 
   Happyr\WordpressBundle\Parser\RewriteLinks:
     arguments: ['%happyr_wordpress.remote_url%', '@router']
-    tags: ['kernel.event_subscriber']
+    tags: ['happyr_wordpress.parser.page']

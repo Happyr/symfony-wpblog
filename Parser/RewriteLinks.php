@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Happyr\WordpressBundle\Parser;
 
 use Happyr\WordpressBundle\Event\PageEvent;
+use Happyr\WordpressBundle\Model\Page;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class RewriteLinks implements EventSubscriberInterface
+class RewriteLinks implements PageParserInterface
 {
     private $remoteUrl;
     private $urlGenerator;
@@ -23,13 +24,13 @@ class RewriteLinks implements EventSubscriberInterface
     }
 
 
-    public function onParse(PageEvent $event)
+
+    public function parsePage(Page $page): void
     {
-        $page = $event->getPage();
         $page->setContent($this->rewrite($page->getContent()));
         $page->setExcerpt($this->rewrite($page->getExcerpt()));
-
     }
+
 
     private function rewrite(string $content): string
     {
@@ -52,11 +53,6 @@ class RewriteLinks implements EventSubscriberInterface
         }
 
         return $content;
-    }
-
-    public static function getSubscribedEvents()
-    {
-        return [PageEvent::PARSE => 'onParse'];
     }
 
 }

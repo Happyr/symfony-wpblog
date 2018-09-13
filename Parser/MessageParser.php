@@ -17,29 +17,55 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class MessageParser
 {
-    private $eventDispatcher;
 
     /**
-     *
-     * @param $eventDispatcher
+     * @var PageParserInterface[]
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    private $pageParsers;
+
+    /**
+     * @var MenuParserInterface[]
+     */
+    private $menuParsers;
+
+    /**
+     * @param PageParserInterface[] $pageParsers
+     * @param MenuParserInterface[] $menuParsers
+     */
+    public function __construct(iterable $pageParsers, iterable $menuParsers)
     {
-        $this->eventDispatcher = $eventDispatcher;
+        $this->pageParsers = $pageParsers;
+        $this->menuParsers = $menuParsers;
     }
+
 
     public function parsePage(array $data): ?Page
     {
-        $page = new Page($data);
+        try {
+            $page = new Page($data);
+        } catch (\Throwable $t) {
+            return null;
+        }
 
-        // dispatch event
-        $this->eventDispatcher->dispatch(PageEvent::PARSE, new PageEvent($page));
+        foreach ($this->pageParsers as $parser) {
+            $parser->parsePage($page);
+        }
 
         return $page;
     }
 
     public function parseMenu(array $data): ?Menu
     {
+        try {
+            $menu = new Menu($data);
+        } catch (\Throwable $t) {
+            return null;
+        }
 
+        foreach ($this->menuParsers as $parser) {
+            $parser->parseMenu($menu);
+        }
+
+        return $menu;
     }
 }

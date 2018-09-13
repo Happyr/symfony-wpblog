@@ -34,13 +34,13 @@ class RewriteLinks implements PageParserInterface
 
     private function rewrite(string $content): string
     {
-        if (!preg_match_all('|href="([^"]+)"|sim', $content, $matches)) {
+        if (!preg_match_all('|href=(?P<quote>[\'"])(.+?)(?P=quote)|sim', $content, $matches)) {
             return $content;
         }
 
         for ($i = 0; $i < count($matches[0]); $i++) {
             // TODO figure out if this should be replaced or not
-            $url = $matches[1][$i];
+            $url = $matches[2][$i];
             $testUrl = parse_url($url);
             $remoteUrl = parse_url($this->remoteUrl);
             if ($testUrl['host'] !== $remoteUrl['host']) {

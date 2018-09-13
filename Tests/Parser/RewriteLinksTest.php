@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Happyr\WordpressBundle\Tests\Parser;
 
 use Happyr\WordpressBundle\Model\Page;
-use Happyr\WordpressBundle\Event\PageEvent;
 use Happyr\WordpressBundle\Parser\RewriteLinks;
 use Happyr\WordpressBundle\Parser\RewriteUrls;
 use PHPUnit\Framework\TestCase;
@@ -13,25 +12,27 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RewriteLinksTest extends TestCase
 {
-
-    public function testRewrite()
+    /**
+     * @dataProvider pageProvider
+     */
+    public function testRewrite($input, $output, $apiUrl, $newUrl, $routeParams)
     {
         $router = $this->getMockBuilder(UrlGeneratorInterface::class)
             ->setMethods(['generate'])
             ->getMock();
         $router->expects($this->once())
             ->method('generate')
-            ->with('wp_page', ['slug'=>'foobar'])
-            ->willReturn('http://new-url.com/foobar');
+            ->with('wp_page', $routeParams)
+            ->willReturn($newUrl);
 
         $page = $this->getMockBuilder(Page::class)->getMock();
         $page->expects($this->once())
             ->method('getContent')
-            ->willReturn('<b><a class="xx" href="http://wordpress.com/page/foobar">Click me</a></span>');
+            ->willReturn($input);
 
         $page->expects($this->once())
             ->method('setContent')
-            ->with('<b><a class="xx" href="http://new-url.com/foobar">Click me</a></span>');
+            ->with($output);
 
         $page->expects($this->once())
             ->method('getExcerpt')
@@ -40,7 +41,21 @@ class RewriteLinksTest extends TestCase
             ->method('setExcerpt')
             ->with('text');
 
-        $parser = new RewriteLinks('http://wordpress.com/wp-json/wp/v2/', $router);
-        $parser->onParse(new PageEvent($page));
+        $parser = new RewriteLinks($apiUrl, $router);
+        $parser->parsePage($page);
+    }
+
+    public function pageProvider()
+    {
+        $apiUrl = 'http://wordpress.com/wp-json/wp/v2/';
+        $routeParams = ['slug' => 'foobar'];
+        $newUrl = 'http://new-url.com/foobar';
+        $input = '<b><a class="xx" href="http://wordpress.com/page/foobar">Click me</a></span>';
+        $output = '<b><a class="xx" href="http://new-url.com/foobar">Click me</a></span>';
+
+        yield [$input, $output, $apiUrl, $newUrl, $routeParams];
+        yield ['<b><a class="xx" href="http://wordpress.com/post/foobar">Click me</a></span>', $output, $apiUrl, $newUrl, $routeParams];
+        yield ['<a class="xx" href="http://wordpress.com/page/foo/bar">Click me</a>', '<a class="xx" href="http://new-url.com/foo/bar">Click me</a>', $apiUrl, 'http://new-url.com/foo/bar', ['slug' => 'foo/bar']];
+        yield ['<a class="xx" href=\'http://wordpress.com/page/foobar\'>Click me</a>', '<a class="xx" href=\'http://new-url.com/foobar\'>Click me</a>', $apiUrl, $newUrl, $routeParams];
     }
 }

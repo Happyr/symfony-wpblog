@@ -148,11 +148,11 @@ The default uploader uploads images to a local folder. This is alright if there
 only is a few images and you have CloudFront or any other reverse proxy caches 
 in front of your Symfony application. 
 
- ```yaml
+```yaml
  # /config/packages/happyr_wordpress.yaml
  wordpress:
    # ...
    local_image_uploader:
      local_path: '%kernel.project_dir%/public/uploads'
      public_prefix: '/uploads'
- ```
+```

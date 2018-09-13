@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Happyr\WordpressBundle\Service;
+namespace Happyr\WordpressBundle\Parser;
 
 use Happyr\WordpressBundle\Model\Menu;
 use Happyr\WordpressBundle\Model\Page;
+use Happyr\WordpressBundle\Event\PageEvent;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -31,10 +32,12 @@ class MessageParser
     {
         $page = new Page($data);
 
-        // TODO dispatch event
+        // dispatch event
+        $this->eventDispatcher->dispatch(PageEvent::PARSE, new PageEvent($page));
 
         return $page;
     }
+
     public function parseMenu(array $data): ?Menu
     {
 

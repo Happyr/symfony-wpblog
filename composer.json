@@ -9,7 +9,8 @@
         "symfony/config": "^4.1",
         "symfony/contracts": "dev-master",
         "symfony/dependency-injection": "^4.1",
-        "symfony/http-kernel": "^4.1"
+        "symfony/http-kernel": "^4.1",
+        "symfony/phpunit-bridge": "^4.1"
     },
     "require-dev": {
         "twig/twig": "^2.0"

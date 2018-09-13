@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Happyr\WordpressBundle\Twig;
 
-use Happyr\WordpressBundle\Api\WpClient;
 use Happyr\WordpressBundle\Service\Wordpress;
 use Twig\Extension\AbstractExtension;
 

@@ -26,8 +26,8 @@ class WordpressExtension extends Extension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yaml');
 
-        $container->getDefinition(WpClient::class)
-            ->replaceArgument(2, rtrim($config['url'], '/'));
+        $remoteUrl = rtrim($config['url'], '/');
+        $container->setParameter('happyr_wordpress.remote_url', $remoteUrl);
 
         $container->getDefinition(Wordpress::class)
             ->replaceArgument(2, new Reference($config['cache']['service']))

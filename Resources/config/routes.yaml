@@ -1,7 +1,11 @@
 happyr_wordpress_index:
     path: /
+    methods: 'GET'
     controller: Happyr\WordpressBundle\Controller\WordpressController::index
 
 happyr_wordpress_page:
     path: /{slug}
+    methods: 'GET'
     controller: Happyr\WordpressBundle\Controller\WordpressController::show
+    requirements:
+        slug: '.+'

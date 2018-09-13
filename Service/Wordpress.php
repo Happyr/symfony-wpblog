@@ -39,7 +39,7 @@ class Wordpress
      */
     public function listPosts(string $query = ''): array
     {
-        return $this->cache->get('post_query_'.$query, function (/*ItemInterface*/ CacheItemInterface $item) use ($query) {
+        return $this->cache->get($this->getCacheKey('query', $query), function (/*ItemInterface*/ CacheItemInterface $item) use ($query) {
             $data = $this->client->getPostList($query);
             if (empty($data)) {
                 $item->expiresAfter(30);
@@ -58,7 +58,7 @@ class Wordpress
 
     public function getPage(string $slug): ?Page
     {
-        return $this->cache->get('page_'.$slug, function (/*ItemInterface*/ CacheItemInterface $item) use ($slug) {
+        return $this->cache->get($this->getCacheKey('page', $slug), function (/*ItemInterface*/ CacheItemInterface $item) use ($slug) {
             $data = $this->client->getPage($slug);
             if (empty($data)) {
                 $item->expiresAfter(300);
@@ -73,7 +73,7 @@ class Wordpress
 
     public function getMenu(string $slug): ?Menu
     {
-        return $this->cache->get('menu_'.$slug, function (/*ItemInterface*/ CacheItemInterface $item) use ($slug) {
+        return $this->cache->get($this->getCacheKey('menu', $slug), function (/*ItemInterface*/ CacheItemInterface $item) use ($slug) {
             $data = $this->client->getMenu($slug);
             if (empty($data)) {
                 $item->expiresAfter(300);
@@ -89,7 +89,7 @@ class Wordpress
     /**
      * Purge cache for pages and menus
      */
-    public function purgeCache(string $slug): void
+    public function purgeCache(string $identifier): void
     {
         // Make sure to expire item
         $callback = function (ItemInterface $item) {
@@ -97,8 +97,13 @@ class Wordpress
         };
 
         // Get item and force recompute.
-        $this->cache->get('page_'.$slug, $callback, INF);
-        $this->cache->get('menu_'.$slug, $callback, INF);
-        $this->cache->get('post_query_', $callback, INF);
+        $this->cache->get($this->getCacheKey('page', $identifier), $callback, INF);
+        $this->cache->get($this->getCacheKey('menu', $identifier), $callback, INF);
+        $this->cache->get($this->getCacheKey('query', $identifier), $callback, INF);
+    }
+
+    private function getCacheKey(string $prefix, string $identifier): string
+    {
+        return sha1($prefix.'_'.$identifier);
     }
 }

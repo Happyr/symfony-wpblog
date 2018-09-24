@@ -14,7 +14,7 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 /**
  * This is the class you want to interact with. It fetches data from
- * cache or API
+ * cache or API.
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
@@ -43,12 +43,13 @@ class Wordpress
             $data = $this->client->getPostList($query);
             if (empty($data)) {
                 $item->expiresAfter(30);
+
                 return null;
             }
 
             $item->expiresAfter($this->ttl);
             $pages = [];
-            foreach($data as $d) {
+            foreach ($data as $d) {
                 $pages[] = $this->messageParser->parsePage($d);
             }
 
@@ -62,6 +63,7 @@ class Wordpress
             $data = $this->client->getPage($slug);
             if (empty($data)) {
                 $item->expiresAfter(300);
+
                 return null;
             }
 
@@ -77,6 +79,7 @@ class Wordpress
             $data = $this->client->getMenu($slug);
             if (empty($data)) {
                 $item->expiresAfter(300);
+
                 return null;
             }
 
@@ -87,7 +90,7 @@ class Wordpress
     }
 
     /**
-     * Purge cache for pages and menus
+     * Purge cache for pages and menus.
      */
     public function purgeCache(string $identifier): void
     {

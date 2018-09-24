@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Happyr\WordpressBundle\Api;
 
 use Happyr\WordpressBundle\Model\Menu;
-use Happyr\WordpressBundle\Model\Page;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * A super simple API client
+ * A super simple API client.
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
@@ -30,7 +29,7 @@ class WpClient
 
     public function getPostList(string $query): array
     {
-        $request = $this->requestFactory->createRequest('GET', $this->baseUrl.'/posts'.$query);
+        $request = $this->requestFactory->createRequest('GET', $this->baseUrl.'/wp/v2/posts'.$query);
         $response = $this->httpClient->sendRequest($request);
 
         return $this->jsonDecode($response);
@@ -39,7 +38,7 @@ class WpClient
     public function getPage(string $slug): array
     {
         // Check pages
-        $request = $this->requestFactory->createRequest('GET', $this->baseUrl.'/pages?slug='.$slug);
+        $request = $this->requestFactory->createRequest('GET', $this->baseUrl.'/wp/v2/pages?slug='.$slug);
         $response = $this->httpClient->sendRequest($request);
 
         $data = $this->jsonDecode($response);
@@ -48,7 +47,7 @@ class WpClient
         }
 
         // Check posts
-        $request = $this->requestFactory->createRequest('GET', $this->baseUrl.'/posts?slug='.$slug);
+        $request = $this->requestFactory->createRequest('GET', $this->baseUrl.'/wp/v2/posts?slug='.$slug);
         $response = $this->httpClient->sendRequest($request);
 
         $data = $this->jsonDecode($response);
@@ -59,11 +58,20 @@ class WpClient
         return [];
     }
 
-
+    /**
+     * This requires the https://wordpress.org/plugins/tutexp-rest-api-menu/ to be installed.
+     */
     public function getMenu(string $slug): array
     {
-        // Install special plugin (https://sv.wordpress.org/plugins/wp-rest-api-v2-menus/)
+        $request = $this->requestFactory->createRequest('GET', $this->baseUrl.'/tutexpmenu/v2/menus/'.$slug);
+        $response = $this->httpClient->sendRequest($request);
 
+        $data = $this->jsonDecode($response);
+        if (count($data) >= 1) {
+            return $data;
+        }
+
+        return [];
     }
 
     private function jsonDecode(ResponseInterface $response): array

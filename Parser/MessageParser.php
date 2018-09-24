@@ -6,9 +6,6 @@ namespace Happyr\WordpressBundle\Parser;
 
 use Happyr\WordpressBundle\Model\Menu;
 use Happyr\WordpressBundle\Model\Page;
-use Happyr\WordpressBundle\Event\PageEvent;
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Parse raw data from the API into models.
@@ -17,7 +14,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class MessageParser
 {
-
     /**
      * @var PageParserInterface[]
      */
@@ -37,7 +33,6 @@ class MessageParser
         $this->pageParsers = $pageParsers;
         $this->menuParsers = $menuParsers;
     }
-
 
     public function parsePage(array $data): ?Page
     {

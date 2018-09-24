@@ -10,6 +10,8 @@ services:
 
   Happyr\WordpressBundle\Twig\WordpressExtension:
     arguments: ['@Happyr\WordpressBundle\Service\Wordpress']
+    tags:
+      - { name: twig.extension }
 
   Happyr\WordpressBundle\Service\LocalImageUploader:
     arguments: [~, ~]

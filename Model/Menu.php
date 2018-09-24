@@ -6,7 +6,17 @@ namespace Happyr\WordpressBundle\Model;
 
 class Menu
 {
-    public function __construct(array $data)
+    /** @var MenuItem[] */
+    private $items = [];
+
+    public function __construct(array $data = [])
     {
+        if (empty($data)) {
+            return;
+        }
+
+        foreach ($data as $d) {
+            $this->items[] = new MenuItem($d);
+        }
     }
 }

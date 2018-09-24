@@ -16,7 +16,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class RewriteUrls implements PageParserInterface
 {
-
     private $remoteUrl;
     private $urlGenerator;
 
@@ -40,7 +39,7 @@ class RewriteUrls implements PageParserInterface
     private function rewrite(string $content): string
     {
         // Find current URL host
-        $url = $this->urlGenerator->generate('happyr_wordpress_page', ['slug'=>'foo']);
+        $url = $this->urlGenerator->generate('happyr_wordpress_page', ['slug' => 'foo'], UrlGeneratorInterface::ABSOLUTE_URL);
         $localParts = parse_url($url);
 
         $remoteParts = parse_url($this->remoteUrl);

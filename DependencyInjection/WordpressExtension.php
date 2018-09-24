@@ -2,7 +2,6 @@
 
 namespace Happyr\WordpressBundle\DependencyInjection;
 
-use Happyr\WordpressBundle\Api\WpClient;
 use Happyr\WordpressBundle\Controller\WordpressController;
 use Happyr\WordpressBundle\Parser\RewriteImageReferences;
 use Happyr\WordpressBundle\Parser\RewriteLinks;
@@ -46,18 +45,16 @@ class WordpressExtension extends Extension
             ->replaceArgument(2, new Reference($config['cache']['service']))
             ->replaceArgument(3, $config['cache']['ttl']);
 
-
         $container->getDefinition(LocalImageUploader::class)
             ->replaceArgument(0, $config['local_image_uploader']['local_path'])
             ->replaceArgument(1, $config['local_image_uploader']['public_prefix']);
-
 
         $this->configureParsers($container, $config['parser']);
     }
 
     private function configureParsers(ContainerBuilder $container, array $config)
     {
-        $parsers = ['image'=>RewriteImageReferences::class, 'link'=>RewriteLinks::class, 'url'=>RewriteUrls::class];
+        $parsers = ['image' => RewriteImageReferences::class, 'link' => RewriteLinks::class, 'url' => RewriteUrls::class];
         foreach ($parsers as $key => $serviceId) {
             if (!$config[$key]['enabled']) {
                 $container->removeDefinition($serviceId);

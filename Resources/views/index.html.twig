@@ -1,6 +1,7 @@
 {% extends "@Wordpress/base.html.twig" %}
 
 {% block body %}
+    {% set menu = getWpMenu('top') %}
     <h1>Post index</h1>
     <div class="post-list">
     {% for page in pages %}

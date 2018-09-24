@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Happyr\WordpressBundle\Tests\Parser;
 
 use Happyr\WordpressBundle\Model\Page;
-use Happyr\WordpressBundle\Parser\RewriteLinks;
 use Happyr\WordpressBundle\Parser\RewriteUrls;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -41,6 +40,5 @@ class RewriteUrlsTest extends TestCase
     {
         yield ['content', 'http://wordpress.com/test', 'https://example.com/test'];
         yield ['content', 'http://wordpress.com/test/bar', 'https://example.com/test/bar'];
-
     }
 }

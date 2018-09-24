@@ -6,7 +6,6 @@ namespace Happyr\WordpressBundle\Tests\Parser;
 
 use Happyr\WordpressBundle\Model\Page;
 use Happyr\WordpressBundle\Parser\RewriteLinks;
-use Happyr\WordpressBundle\Parser\RewriteUrls;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 

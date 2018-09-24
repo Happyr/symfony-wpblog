@@ -13,9 +13,9 @@ each request so your blog do not get overwhelmed with requests.
 ### Rewriting links
 
 We need to rewrite absolute URLs from WordPress. To make things easier for us, please
-set your page and post url prefix to "page" and "post" respectively. 
+set your page and post url prefix to "page". 
 
-(TODO add image)
+![Permalinks](/Resources/docs/image/permalinks.png)
 
 ### Invalidate cache
 
@@ -42,7 +42,7 @@ URL: `http://demo.wp-api.org`.
 ```yaml
 # /config/packages/happyr_wordpress.yaml
 wordpress:
-  url: 'http://demo.wp-api.org/wp-json/wp/v2/'
+  url: 'http://demo.wp-api.org/wp-json'
 ```
 
 ### Templates

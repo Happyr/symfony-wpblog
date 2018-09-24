@@ -16,7 +16,6 @@ class WordpressExtension extends AbstractExtension
         $this->wordpress = $wp;
     }
 
-
     public function getFunctions()
     {
         return [
@@ -24,5 +23,4 @@ class WordpressExtension extends AbstractExtension
            new \Twig_SimpleFunction('getWpPage', [$this->wordpress, 'getPage']),
         ];
     }
-
 }

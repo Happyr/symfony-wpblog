@@ -6,11 +6,8 @@ namespace Happyr\WordpressBundle\Tests\Parser;
 
 use Happyr\WordpressBundle\Model\Page;
 use Happyr\WordpressBundle\Parser\RewriteImageReferences;
-use Happyr\WordpressBundle\Parser\RewriteLinks;
-use Happyr\WordpressBundle\Parser\RewriteUrls;
 use Happyr\WordpressBundle\Service\ImageUploaderInterface;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RewriteImageReferencesTest extends TestCase
 {

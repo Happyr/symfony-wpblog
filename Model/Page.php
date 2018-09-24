@@ -63,7 +63,9 @@ class Page
         $seconds = $diff->h * 60 * 60 + $diff->m * 60;
         $tz = timezone_name_from_abbr('', $seconds, 1);
         // Workaround for bug #44780
-        if($tz === false) $tz = timezone_name_from_abbr('', $seconds, 0);
+        if (false === $tz) {
+            $tz = timezone_name_from_abbr('', $seconds, 0);
+        }
         $localTimeZone = new \DateTimeZone($tz);
         $this->createdAt = $this->createdAt->setTimezone($localTimeZone);
         $this->updatedAt = $this->updatedAt->setTimezone($localTimeZone);

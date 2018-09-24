@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Simple controller for index and page
+ * Simple controller for index and page.
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
@@ -32,7 +32,7 @@ final class WordpressController extends Controller
     {
         $pages = $this->wordpress->listPosts();
 
-        return $this->render($this->indexTemplate, ['pages'=>$pages]);
+        return $this->render($this->indexTemplate, ['pages' => $pages]);
     }
 
     public function show($slug)
@@ -41,7 +41,7 @@ final class WordpressController extends Controller
             throw $this->createNotFoundException();
         }
 
-        return $this->render($this->pageTemplate, ['page'=>$page]);
+        return $this->render($this->pageTemplate, ['page' => $page]);
     }
 
     public function invalidate($slug)

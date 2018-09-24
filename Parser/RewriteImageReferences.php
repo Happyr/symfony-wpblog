@@ -28,7 +28,6 @@ class RewriteImageReferences implements PageParserInterface
         // TODO featured media?
     }
 
-
     private function rewrite(string $content): string
     {
         if (!preg_match_all('|<img[^>]+src=(?P<quote>[\'"])(.+?)(?P=quote)|sim', $content, $matches)) {
@@ -37,7 +36,7 @@ class RewriteImageReferences implements PageParserInterface
 
         $remoteUrl = parse_url($this->remoteUrl);
 
-        for ($i = 0; $i < count($matches[0]); $i++) {
+        for ($i = 0; $i < count($matches[0]); ++$i) {
             $url = $matches[2][$i];
             $testUrl = parse_url($url);
             if (!empty($testUrl['host']) && $testUrl['host'] !== $remoteUrl['host']) {
@@ -53,5 +52,4 @@ class RewriteImageReferences implements PageParserInterface
 
         return $content;
     }
-
 }

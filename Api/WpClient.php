@@ -86,6 +86,10 @@ class WpClient
             throw new \RuntimeException(sprintf('Error (%d) when trying to json_decode response', json_last_error()));
         }
 
+        if (!is_array($data)) {
+            return [];
+        }
+
         return $data;
     }
 }

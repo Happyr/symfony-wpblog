@@ -41,10 +41,10 @@ class Wordpress
     {
         return $this->cache->get($this->getCacheKey('query', $query), function (/*ItemInterface*/ CacheItemInterface $item) use ($query) {
             $data = $this->client->getPostList($query);
-            if (empty($data)) {
+            if (!$this->isValidResponse($data)) {
                 $item->expiresAfter(30);
 
-                return null;
+                return [];
             }
 
             $item->expiresAfter($this->ttl);
@@ -61,7 +61,7 @@ class Wordpress
     {
         return $this->cache->get($this->getCacheKey('page', $slug), function (/*ItemInterface*/ CacheItemInterface $item) use ($slug) {
             $data = $this->client->getPage($slug);
-            if (empty($data)) {
+            if (!$this->isValidResponse($data)) {
                 $item->expiresAfter(300);
 
                 return null;
@@ -77,7 +77,7 @@ class Wordpress
     {
         return $this->cache->get($this->getCacheKey('menu', $slug), function (/*ItemInterface*/ CacheItemInterface $item) use ($slug) {
             $data = $this->client->getMenu($slug);
-            if (empty($data)) {
+            if (!$this->isValidResponse($data)) {
                 $item->expiresAfter(300);
 
                 return null;
@@ -109,4 +109,14 @@ class Wordpress
     {
         return sha1($prefix.'_'.$identifier);
     }
+
+    private function isValidResponse($data): bool
+    {
+        if (isset($data['code']) && isset($data['data']['status']) && $data['data']['status'] === 400) {
+            return false;
+        }
+
+        return !empty($data);
+    }
+
 }

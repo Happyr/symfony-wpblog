@@ -36,6 +36,8 @@ class Wordpress
     /**
      * Get a list of posts. Ie for the start page. Feel free to pass any query to
      * Wordpress API.
+     *
+     * {@link https://developer.wordpress.org/rest-api/reference/posts/#arguments}
      */
     public function listPosts(string $query = ''): array
     {

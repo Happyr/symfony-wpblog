@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Happyr\WordpressBundle\Twig;
 
 use Happyr\WordpressBundle\Service\Wordpress;
-use Symfony\Bundle\FrameworkBundle\Tests\Fixtures\Validation\Category;
 use Twig\Extension\AbstractExtension;
 
 class WordpressExtension extends AbstractExtension

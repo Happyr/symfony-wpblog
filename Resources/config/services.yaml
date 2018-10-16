@@ -3,7 +3,7 @@ services:
     arguments: ['@Psr\Http\Client\ClientInterface', '@Psr\Http\Message\RequestFactoryInterface', '%happyr_wordpress.remote_url%']
 
   Happyr\WordpressBundle\Parser\MessageParser:
-    arguments: [!tagged happyr_wordpress.parser.page, !tagged happyr_wordpress.parser.menu]
+    arguments: [!tagged happyr_wordpress.parser.page, !tagged happyr_wordpress.parser.menu, !tagged happyr_wordpress.parser.media, !tagged happyr_wordpress.parser.category]
 
   Happyr\WordpressBundle\Service\Wordpress:
     arguments: ['@Happyr\WordpressBundle\Api\WpClient', '@Happyr\WordpressBundle\Parser\MessageParser',  ~, ~]

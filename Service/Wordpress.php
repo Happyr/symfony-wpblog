@@ -87,7 +87,7 @@ class Wordpress
 
             $item->expiresAfter($this->ttl);
 
-            return $this->messageParser->parseCategories($data);
+            return $this->messageParser->parseMenu($data);
         });
     }
 
@@ -103,7 +103,7 @@ class Wordpress
 
             $item->expiresAfter($this->ttl);
 
-            return $data;
+            return $this->messageParser->parseCategories($data);
         });
     }
 

@@ -66,7 +66,7 @@ class MessageParser
     /**
      * @return Category[]
      */
-    public function parseCategory(array $data): array
+    public function parseCategories(array $data): array
     {
         try {
             // TODO decide if it is one or more

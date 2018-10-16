@@ -87,7 +87,39 @@ class Wordpress
 
             $item->expiresAfter($this->ttl);
 
-            return $this->messageParser->parseMenu($data);
+            return $this->messageParser->parseCategories($data);
+        });
+    }
+
+    public function getCategories(string $slug): array
+    {
+        return $this->cache->get($this->getCacheKey('categories', $slug), function (/*ItemInterface*/ CacheItemInterface $item) use ($slug) {
+            $data = $this->client->get('/wp/v2/categories'.$slug);
+            if (!$this->isValidResponse($data)) {
+                $item->expiresAfter(300);
+
+                return null;
+            }
+
+            $item->expiresAfter($this->ttl);
+
+            return $data;
+        });
+    }
+
+    public function getMedia(string $slug): array
+    {
+        return $this->cache->get($this->getCacheKey('media', $slug), function (/*ItemInterface*/ CacheItemInterface $item) use ($slug) {
+            $data = $this->client->get('/wp/v2/media'.$slug);
+            if (!$this->isValidResponse($data)) {
+                $item->expiresAfter(300);
+
+                return null;
+            }
+
+            $item->expiresAfter($this->ttl);
+
+            return $this->messageParser->parseMedia($data);
         });
     }
 

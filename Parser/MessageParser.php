@@ -14,24 +14,23 @@ use Happyr\WordpressBundle\Model\Page;
  */
 class MessageParser
 {
-    /**
-     * @var PageParserInterface[]
-     */
     private $pageParsers;
-
-    /**
-     * @var MenuParserInterface[]
-     */
     private $menuParsers;
+    private $mediaParsers;
+    private $categoryParsers;
 
     /**
      * @param PageParserInterface[] $pageParsers
      * @param MenuParserInterface[] $menuParsers
+     * @param MediaParserInterface[] $menuParsers
+     * @param CategoryParsernterface[] $menuParsers
      */
-    public function __construct(iterable $pageParsers, iterable $menuParsers)
+    public function __construct(iterable $pageParsers, iterable $menuParsers, iterable $mediaParsers, iterable $categoryParsers)
     {
         $this->pageParsers = $pageParsers;
         $this->menuParsers = $menuParsers;
+        $this->mediaParsers = $mediaParsers;
+        $this->categoryParsers = $categoryParsers;
     }
 
     public function parsePage(array $data): ?Page
@@ -62,5 +61,43 @@ class MessageParser
         }
 
         return $menu;
+    }
+
+    /**
+     * @return Category[]
+     */
+    public function parseCategory(array $data): array
+    {
+        try {
+            // TODO decide if it is one or more
+            $category = new Category($data);
+        } catch (\Throwable $t) {
+            return null;
+        }
+
+        foreach ($this->categoryParsers as $parser) {
+            $parser->parseCategory($category);
+        }
+
+        return [$category];
+    }
+
+    /**
+     * @return Media[]
+     */
+    public function parseMedia(array $data): array
+    {
+        try {
+            // TODO decide if it is one or more
+            $category = new Media($data);
+        } catch (\Throwable $t) {
+            return null;
+        }
+
+        foreach ($this->mediaParsers as $parser) {
+            $parser->parseMedia($category);
+        }
+
+        return [$category];
     }
 }

@@ -74,6 +74,25 @@ class WpClient
         return [];
     }
 
+    /**
+     * Generic get.
+     * @param string $uri example "/wp/v2/categories"
+     *
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     */
+    public function getUri(string $uri): array
+    {
+        $request = $this->requestFactory->createRequest('GET', $this->baseUrl.$uri);
+        $response = $this->httpClient->sendRequest($request);
+
+        $data = $this->jsonDecode($response);
+        if (empty($data)) {
+            return [];
+        }
+
+        return $data;
+    }
+
     private function jsonDecode(ResponseInterface $response): array
     {
         $body = $response->getBody()->__toString();

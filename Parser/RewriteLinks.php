@@ -43,7 +43,7 @@ class RewriteLinks implements PageParserInterface, MenuParserInterface
         for ($i = 0; $i < count($matches[0]); ++$i) {
             $url = $matches[2][$i];
             $testUrl = parse_url($url);
-            if ($testUrl['host'] !== $remoteUrl['host']) {
+            if (empty($testUrl['host']) || $testUrl['host'] !== $remoteUrl['host']) {
                 continue;
             }
             if (preg_match('@/page/(.*)@si', $testUrl['path'], $urlMatch)) {

@@ -95,7 +95,7 @@ class MessageParser
         try {
             foreach ($data as $media) {
 
-                $media = new Media($media);
+                $mediaCollection[] = new Media($media);
                 foreach ($this->mediaParsers as $parser) {
                     $parser->parseMedia($media);
                 }

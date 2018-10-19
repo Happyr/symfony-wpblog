@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Happyr\WordpressBundle\Twig;
 
+use Happyr\WordpressBundle\Model\Category;
+use Happyr\WordpressBundle\Model\Media;
 use Happyr\WordpressBundle\Service\Wordpress;
 use Twig\Extension\AbstractExtension;
 

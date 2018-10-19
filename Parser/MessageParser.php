@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Happyr\WordpressBundle\Parser;
 
+use Happyr\WordpressBundle\Model\Category;
+use Happyr\WordpressBundle\Model\Media;
 use Happyr\WordpressBundle\Model\Menu;
 use Happyr\WordpressBundle\Model\Page;
 
@@ -20,10 +22,10 @@ class MessageParser
     private $categoryParsers;
 
     /**
-     * @param PageParserInterface[] $pageParsers
-     * @param MenuParserInterface[] $menuParsers
-     * @param MediaParserInterface[] $menuParsers
-     * @param CategoryParsernterface[] $menuParsers
+     * @param PageParserInterface[]     $pageParsers
+     * @param MenuParserInterface[]     $menuParsers
+     * @param MediaParserInterface[]    $mediaParsers
+     * @param CategoryParserInterface[] $categoryParsers
      */
     public function __construct(iterable $pageParsers, iterable $menuParsers, iterable $mediaParsers, iterable $categoryParsers)
     {
@@ -68,18 +70,20 @@ class MessageParser
      */
     public function parseCategories(array $data): array
     {
-        try {
-            // TODO decide if it is one or more
-            $category = new Category($data);
-        } catch (\Throwable $t) {
-            return null;
+        $collection = [];
+        foreach ($data as $d) {
+            try {
+                $category = new Category($d);
+                foreach ($this->categoryParsers as $parser) {
+                    $parser->parseCategory($category);
+                }
+                $collection[] = $category;
+            } catch (\Throwable $t) {
+                continue;
+            }
         }
 
-        foreach ($this->categoryParsers as $parser) {
-            $parser->parseCategory($category);
-        }
-
-        return [$category];
+        return $collection;
     }
 
     /**
@@ -87,17 +91,19 @@ class MessageParser
      */
     public function parseMedia(array $data): array
     {
-        try {
-            // TODO decide if it is one or more
-            $category = new Media($data);
-        } catch (\Throwable $t) {
-            return null;
+        $collection = [];
+        foreach ($data as $d) {
+            try {
+                $media = new Media($d);
+                foreach ($this->mediaParsers as $parser) {
+                    $parser->parseMedia($media);
+                }
+                $collection[] = $media;
+            } catch (\Throwable $t) {
+                continue;
+            }
         }
 
-        foreach ($this->mediaParsers as $parser) {
-            $parser->parseMedia($category);
-        }
-
-        return [$category];
+        return $collection;
     }
 }

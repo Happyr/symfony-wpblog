@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Happyr\WordpressBundle\Twig;
 
+use Happyr\WordpressBundle\Model\Category;
+use Happyr\WordpressBundle\Model\Media;
 use Happyr\WordpressBundle\Service\Wordpress;
 use Twig\Extension\AbstractExtension;
 
@@ -26,7 +28,7 @@ class WordpressExtension extends AbstractExtension
         ];
     }
 
-    public function getMediaById($id): ?string
+    public function getMediaById($id): ?Media
     {
         $media = $this->wordpress->getMedia('/'.$id);
         foreach ($media as $m) {
@@ -36,7 +38,7 @@ class WordpressExtension extends AbstractExtension
         return null;
     }
 
-    public function getCategoryById($id): ?string
+    public function getCategoryById($id): ?Category
     {
         $categories = $this->wordpress->getCategories('/'.$id);
         foreach ($categories as $category) {

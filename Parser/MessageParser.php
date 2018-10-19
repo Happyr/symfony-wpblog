@@ -70,19 +70,20 @@ class MessageParser
      */
     public function parseCategories(array $data): array
     {
-        $categories = [];
-        foreach ($data as $category) {
+        $collection = [];
+        foreach ($data as $d) {
             try {
-                $categories[] = new Category($category);
+                $category = new Category($d);
                 foreach ($this->categoryParsers as $parser) {
                     $parser->parseCategory($category);
+                    $collection[] = $category;
                 }
             } catch (\Throwable $t) {
                 continue;
             }
         }
 
-        return $categories;
+        return $collection;
     }
 
     /**
@@ -90,18 +91,19 @@ class MessageParser
      */
     public function parseMedia(array $data): array
     {
-        $mediaCollection = [];
-        foreach ($data as $media) {
+        $collection = [];
+        foreach ($data as $d) {
             try {
-                $mediaCollection[] = new Media($media);
+                $media = new Media($d);
                 foreach ($this->mediaParsers as $parser) {
                     $parser->parseMedia($media);
+                    $collection[] = $media;
                 }
             } catch (\Throwable $t) {
                 continue;
             }
         }
 
-        return $mediaCollection;
+        return $collection;
     }
 }

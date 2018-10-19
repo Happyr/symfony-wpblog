@@ -79,7 +79,8 @@ class MessageParser
                 }
             }
         } catch (\Throwable $t) {
-            return $categories; // Unsure about this
+            $modifiedArray = array_pop($categories);
+            $categories = array_values($modifiedArray); // reindex array
         }
 
         return $categories;
@@ -99,7 +100,8 @@ class MessageParser
                 }
             }
         } catch (\Throwable $t) {
-            return $mediaCollection; // Unsure about this, it should only return those that didn't throw an exception
+            $modifiedArray = array_pop($mediaCollection);
+            $mediaCollection = array_values($modifiedArray); // reindex array
         }
 
         return $mediaCollection;

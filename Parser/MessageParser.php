@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Happyr\WordpressBundle\Parser;
 
+use Happyr\WordpressBundle\Model\Category;
 use Happyr\WordpressBundle\Model\Menu;
 use Happyr\WordpressBundle\Model\Page;
 
@@ -22,8 +23,8 @@ class MessageParser
     /**
      * @param PageParserInterface[] $pageParsers
      * @param MenuParserInterface[] $menuParsers
-     * @param MediaParserInterface[] $menuParsers
-     * @param CategoryParsernterface[] $menuParsers
+     * @param MediaParserInterface[] $mediaParsers
+     * @param CategoryParserInterface[] $categoryParsers
      */
     public function __construct(iterable $pageParsers, iterable $menuParsers, iterable $mediaParsers, iterable $categoryParsers)
     {

@@ -57,4 +57,9 @@ class Media
     {
         return $this->sourceUrl;
     }
+
+    public function setSourceUrl(string $sourceUrl)
+    {
+        $this->sourceUrl = $sourceUrl;
+    }
 }

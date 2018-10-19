@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Happyr\WordpressBundle\Parser;
 
 use Happyr\WordpressBundle\Model\Category;
+use Happyr\WordpressBundle\Model\Media;
 use Happyr\WordpressBundle\Model\Menu;
 use Happyr\WordpressBundle\Model\Page;
 
@@ -21,9 +22,9 @@ class MessageParser
     private $categoryParsers;
 
     /**
-     * @param PageParserInterface[] $pageParsers
-     * @param MenuParserInterface[] $menuParsers
-     * @param MediaParserInterface[] $mediaParsers
+     * @param PageParserInterface[]     $pageParsers
+     * @param MenuParserInterface[]     $menuParsers
+     * @param MediaParserInterface[]    $mediaParsers
      * @param CategoryParserInterface[] $categoryParsers
      */
     public function __construct(iterable $pageParsers, iterable $menuParsers, iterable $mediaParsers, iterable $categoryParsers)
@@ -65,12 +66,12 @@ class MessageParser
     }
 
     /**
-     * @return Category[]
+     * @return Category
      */
-    public function parseCategories(array $data): array
+    public function parseCategories(array $data): ?Category
     {
         try {
-            // TODO decide if it is one or more
+            // It will always be one category returned, since we fetch by unique id
             $category = new Category($data);
         } catch (\Throwable $t) {
             return null;
@@ -80,7 +81,7 @@ class MessageParser
             $parser->parseCategory($category);
         }
 
-        return [$category];
+        return $category;
     }
 
     /**
@@ -89,16 +90,16 @@ class MessageParser
     public function parseMedia(array $data): array
     {
         try {
-            // TODO decide if it is one or more
-            $category = new Media($data);
+            // It will always be one media returned, since we fetch by unique id
+            $media = new Media($data);
         } catch (\Throwable $t) {
             return null;
         }
 
         foreach ($this->mediaParsers as $parser) {
-            $parser->parseMedia($category);
+            $parser->parseMedia($media);
         }
 
-        return [$category];
+        return [$media];
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Happyr\WordpressBundle\Service;
 
 use Happyr\WordpressBundle\Api\WpClient;
+use Happyr\WordpressBundle\Model\Category;
 use Happyr\WordpressBundle\Model\Menu;
 use Happyr\WordpressBundle\Model\Page;
 use Happyr\WordpressBundle\Parser\MessageParser;
@@ -91,7 +92,7 @@ class Wordpress
         });
     }
 
-    public function getCategories(string $slug): array
+    public function getCategories(string $slug): ?Category
     {
         return $this->cache->get($this->getCacheKey('categories', $slug), function (/*ItemInterface*/ CacheItemInterface $item) use ($slug) {
             $data = $this->client->get('/wp/v2/categories'.$slug);
@@ -146,11 +147,10 @@ class Wordpress
 
     private function isValidResponse($data): bool
     {
-        if (isset($data['code']) && isset($data['data']['status']) && $data['data']['status'] === 400) {
+        if (isset($data['code']) && isset($data['data']['status']) && 400 === $data['data']['status']) {
             return false;
         }
 
         return !empty($data);
     }
-
 }

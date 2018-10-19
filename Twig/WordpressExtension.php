@@ -26,21 +26,21 @@ class WordpressExtension extends AbstractExtension
         ];
     }
 
-    public function getMediaById($id): ?Media
+    public function getMediaById($id): ?string
     {
         $media = $this->wordpress->getMedia('/'.$id);
         foreach ($media as $m) {
-            return $m;
+            return $m['source_url'];
         }
 
         return null;
     }
 
-    public function getCategoryById($id): ?Category
+    public function getCategoryById($id): ?string
     {
         $categories = $this->wordpress->getCategories('/'.$id);
         foreach ($categories as $category) {
-            return $category;
+            return $category['name'];
         }
 
         return null;

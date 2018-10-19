@@ -9,14 +9,14 @@ class Category
     /**
      * @var Category[]
      */
-    private $categories;
+    private $category;
 
-    public function __construct(array $categories)
+    public function __construct(array $category)
     {
-        if (empty($categories)) {
+        if (empty($category)) {
             return;
         }
 
-        $this->categories = $categories;
+        $this->category = $category;
     }
 }

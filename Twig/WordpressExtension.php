@@ -30,7 +30,7 @@ class WordpressExtension extends AbstractExtension
     {
         $media = $this->wordpress->getMedia('/'.$id);
         foreach ($media as $m) {
-            return $m['source_url'];
+            return $m;
         }
 
         return null;
@@ -40,7 +40,7 @@ class WordpressExtension extends AbstractExtension
     {
         $categories = $this->wordpress->getCategories('/'.$id);
         foreach ($categories as $category) {
-            return $category['name'];
+            return $category;
         }
 
         return null;

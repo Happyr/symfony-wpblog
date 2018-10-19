@@ -32,6 +32,7 @@ class Media
             return;
         }
 
+
         $this->id = $data['id'];
         $this->link = $data['link'];
         $this->slug = $data['slug'];

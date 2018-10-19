@@ -71,16 +71,15 @@ class MessageParser
     public function parseCategories(array $data): array
     {
         $categories = [];
-        try {
-            foreach ($data as $category) {
+        foreach ($data as $category) {
+            try {
                 $categories[] = new Category($category);
                 foreach ($this->categoryParsers as $parser) {
                     $parser->parseCategory($category);
                 }
+            } catch (\Throwable $t) {
+                continue;
             }
-        } catch (\Throwable $t) {
-            $modifiedArray = array_pop($categories);
-            $categories = array_values($modifiedArray); // reindex array
         }
 
         return $categories;
@@ -92,16 +91,15 @@ class MessageParser
     public function parseMedia(array $data): array
     {
         $mediaCollection = [];
-        try {
-            foreach ($data as $media) {
+        foreach ($data as $media) {
+            try {
                 $mediaCollection[] = new Media($media);
                 foreach ($this->mediaParsers as $parser) {
                     $parser->parseMedia($media);
                 }
+            } catch (\Throwable $t) {
+                continue;
             }
-        } catch (\Throwable $t) {
-            $modifiedArray = array_pop($mediaCollection);
-            $mediaCollection = array_values($modifiedArray); // reindex array
         }
 
         return $mediaCollection;

@@ -76,8 +76,8 @@ class MessageParser
                 $category = new Category($d);
                 foreach ($this->categoryParsers as $parser) {
                     $parser->parseCategory($category);
-                    $collection[] = $category;
                 }
+                $collection[] = $category;
             } catch (\Throwable $t) {
                 continue;
             }
@@ -97,8 +97,8 @@ class MessageParser
                 $media = new Media($d);
                 foreach ($this->mediaParsers as $parser) {
                     $parser->parseMedia($media);
-                    $collection[] = $media;
                 }
+                $collection[] = $media;
             } catch (\Throwable $t) {
                 continue;
             }

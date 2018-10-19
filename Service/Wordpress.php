@@ -108,7 +108,7 @@ class Wordpress
         });
     }
 
-    public function getMedia(string $slug): array
+    public function getMedia(string $slug = ''): array
     {
         return $this->cache->get($this->getCacheKey('media', $slug), function (/*ItemInterface*/ CacheItemInterface $item) use ($slug) {
             $data = $this->client->get('/wp/v2/media'.$slug);

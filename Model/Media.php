@@ -24,7 +24,7 @@ class Media
     /**
      * @var string
      */
-    private $souceUrl;
+    private $sourceUrl;
 
     public function __construct(array $data)
     {
@@ -35,7 +35,7 @@ class Media
         $this->id = $data['id'];
         $this->link = $data['link'];
         $this->slug = $data['slug'];
-        $this->souceUrl = $data['source_url'];
+        $this->sourceUrl = $data['source_url'];
     }
 
     public function getId(): int
@@ -53,8 +53,8 @@ class Media
         return $this->slug;
     }
 
-    public function getSouceUrl(): string
+    public function getSourceUrl(): string
     {
-        return $this->souceUrl;
+        return $this->sourceUrl;
     }
 }

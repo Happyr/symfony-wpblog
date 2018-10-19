@@ -74,7 +74,6 @@ class MessageParser
         try {
             foreach ($data as $category) {
                 $categories[] = new Category($category);
-
                 foreach ($this->categoryParsers as $parser) {
                     $parser->parseCategory($category);
                 }
@@ -94,7 +93,6 @@ class MessageParser
         $mediaCollection = [];
         try {
             foreach ($data as $media) {
-
                 $mediaCollection[] = new Media($media);
                 foreach ($this->mediaParsers as $parser) {
                     $parser->parseMedia($media);

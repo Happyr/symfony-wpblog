@@ -66,22 +66,24 @@ class MessageParser
     }
 
     /**
-     * @return Category
+     * @return Category[]
      */
-    public function parseCategories(array $data): ?Category
+    public function parseCategories(array $data): array
     {
+        $categories = [];
         try {
-            // It will always be one category returned, since we fetch by unique id
-            $category = new Category($data);
+            foreach ($data as $category) {
+                $categories[] = new Category($category);
+
+                foreach ($this->categoryParsers as $parser) {
+                    $parser->parseCategory($category);
+                }
+            }
         } catch (\Throwable $t) {
-            return null;
+            return $categories; // Unsure about this
         }
 
-        foreach ($this->categoryParsers as $parser) {
-            $parser->parseCategory($category);
-        }
-
-        return $category;
+        return $categories;
     }
 
     /**
@@ -89,17 +91,19 @@ class MessageParser
      */
     public function parseMedia(array $data): array
     {
+        $mediaCollection = [];
         try {
-            // It will always be one media returned, since we fetch by unique id
-            $media = new Media($data);
+            foreach ($data as $media) {
+
+                $media = new Media($media);
+                foreach ($this->mediaParsers as $parser) {
+                    $parser->parseMedia($media);
+                }
+            }
         } catch (\Throwable $t) {
-            return null;
+            return $mediaCollection; // Unsure about this, it should only return those that didn't throw an exception
         }
 
-        foreach ($this->mediaParsers as $parser) {
-            $parser->parseMedia($media);
-        }
-
-        return [$media];
+        return $mediaCollection;
     }
 }

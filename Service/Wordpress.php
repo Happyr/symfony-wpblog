@@ -92,7 +92,7 @@ class Wordpress
         });
     }
 
-    public function getCategories(string $slug): ?Category
+    public function getCategories(string $slug = ''): array
     {
         return $this->cache->get($this->getCacheKey('categories', $slug), function (/*ItemInterface*/ CacheItemInterface $item) use ($slug) {
             $data = $this->client->get('/wp/v2/categories'.$slug);

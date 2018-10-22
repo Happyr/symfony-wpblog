@@ -37,6 +37,11 @@ class LocalImageUploader implements ImageUploaderInterface
 
         $filename = \basename($url);
 
+        // Check if file already exists
+        if (\file_exists(\sprintf('%s/%s', $this->uploadsFolder, $filename))) {
+            return \sprintf('%s/%s', $this->webPrefix, $filename);
+        }
+
         // Save the file
         \file_put_contents(\sprintf('%s/%s', $this->uploadsFolder, $filename), $file);
 

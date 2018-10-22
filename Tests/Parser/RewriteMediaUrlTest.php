@@ -19,20 +19,17 @@ class RewriteMediaUrlTest extends TestCase
         $router = $this->getMockBuilder(ImageUploaderInterface::class)
             ->setMethods(['uploadImage'])
             ->getMock();
-        $router->expects($this->once())
-            ->method('uploadImage')
-            ->with($inputUrl)
-            ->willReturn($outputUrl);
 
         $media = $this->getMockBuilder(Media::class)
-            ->setMethods(['getSourceUrl'])
             ->getMock();
+
         $media->expects($this->once())
-            ->method('getSourceUrl')
-            ->willReturn($outputUrl);
+            ->method('setSourceUrl');
 
         $parser = new RewriteMediaUrl($inputUrl, $router);
         $parser->parseMedia($media);
+
+        $media->method('getSourceUrl')->willReturn($outputUrl);
     }
 
     public function urlProvider()

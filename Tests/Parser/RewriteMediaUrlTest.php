@@ -22,13 +22,12 @@ class RewriteMediaUrlTest extends TestCase
 
         $media = $this->getMockBuilder(Media::class)
             ->getMock();
+
         $media->expects($this->once())
             ->method('setSourceUrl');
 
         $parser = new RewriteMediaUrl('http://wordpress.com/wp-conent/uploads/2018/foobar.jpg', $router);
         $parser->parseMedia($media);
-
-        $media->method('getSourceUrl')->willReturn($outputUrl);
     }
 
     public function urlProvider()

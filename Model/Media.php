@@ -26,7 +26,7 @@ class Media
      */
     private $sourceUrl;
 
-    public function __construct(array $data)
+    public function __construct(array $data = [])
     {
         if (empty($data)) {
             return;

@@ -8,8 +8,6 @@
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false"
-         syntaxCheck="false"
-         codecoverage="true"
          bootstrap="./vendor/autoload.php"
         >
 
@@ -17,7 +15,6 @@
         <env name="ENV" value="test" />
     </php>
 
-    <formatter type="clover" usefile="false"/>
     <testsuites>
         <testsuite name="Test Suite">
             <directory>./Tests</directory>

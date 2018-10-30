@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Happyr\WordpressBundle\Parser;
 
+use Happyr\WordpressBundle\Model\Category;
+use Happyr\WordpressBundle\Model\Media;
 use Happyr\WordpressBundle\Model\Menu;
 use Happyr\WordpressBundle\Model\Page;
 
@@ -14,24 +16,23 @@ use Happyr\WordpressBundle\Model\Page;
  */
 class MessageParser
 {
-    /**
-     * @var PageParserInterface[]
-     */
     private $pageParsers;
-
-    /**
-     * @var MenuParserInterface[]
-     */
     private $menuParsers;
+    private $mediaParsers;
+    private $categoryParsers;
 
     /**
-     * @param PageParserInterface[] $pageParsers
-     * @param MenuParserInterface[] $menuParsers
+     * @param PageParserInterface[]     $pageParsers
+     * @param MenuParserInterface[]     $menuParsers
+     * @param MediaParserInterface[]    $mediaParsers
+     * @param CategoryParserInterface[] $categoryParsers
      */
-    public function __construct(iterable $pageParsers, iterable $menuParsers)
+    public function __construct(iterable $pageParsers, iterable $menuParsers, iterable $mediaParsers, iterable $categoryParsers)
     {
         $this->pageParsers = $pageParsers;
         $this->menuParsers = $menuParsers;
+        $this->mediaParsers = $mediaParsers;
+        $this->categoryParsers = $categoryParsers;
     }
 
     public function parsePage(array $data): ?Page
@@ -62,5 +63,47 @@ class MessageParser
         }
 
         return $menu;
+    }
+
+    /**
+     * @return Category[]
+     */
+    public function parseCategories(array $data): array
+    {
+        $collection = [];
+        foreach ($data as $d) {
+            try {
+                $category = new Category($d);
+                foreach ($this->categoryParsers as $parser) {
+                    $parser->parseCategory($category);
+                }
+                $collection[] = $category;
+            } catch (\Throwable $t) {
+                continue;
+            }
+        }
+
+        return $collection;
+    }
+
+    /**
+     * @return Media[]
+     */
+    public function parseMedia(array $data): array
+    {
+        $collection = [];
+        foreach ($data as $d) {
+            try {
+                $media = new Media($d);
+                foreach ($this->mediaParsers as $parser) {
+                    $parser->parseMedia($media);
+                }
+                $collection[] = $media;
+            } catch (\Throwable $t) {
+                continue;
+            }
+        }
+
+        return $collection;
     }
 }

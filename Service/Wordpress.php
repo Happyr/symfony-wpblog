@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Happyr\WordpressBundle\Service;
 
 use Happyr\WordpressBundle\Api\WpClient;
+use Happyr\WordpressBundle\Model\Category;
 use Happyr\WordpressBundle\Model\Menu;
 use Happyr\WordpressBundle\Model\Page;
 use Happyr\WordpressBundle\Parser\MessageParser;
@@ -91,6 +92,38 @@ class Wordpress
         });
     }
 
+    public function getCategories(string $slug = ''): array
+    {
+        return $this->cache->get($this->getCacheKey('categories', $slug), function (/*ItemInterface*/ CacheItemInterface $item) use ($slug) {
+            $data = $this->client->get('/wp/v2/categories'.$slug);
+            if (!$this->isValidResponse($data)) {
+                $item->expiresAfter(300);
+
+                return null;
+            }
+
+            $item->expiresAfter($this->ttl);
+
+            return $this->messageParser->parseCategories($data);
+        });
+    }
+
+    public function getMedia(string $slug = ''): array
+    {
+        return $this->cache->get($this->getCacheKey('media', $slug), function (/*ItemInterface*/ CacheItemInterface $item) use ($slug) {
+            $data = $this->client->get('/wp/v2/media'.$slug);
+            if (!$this->isValidResponse($data)) {
+                $item->expiresAfter(300);
+
+                return null;
+            }
+
+            $item->expiresAfter($this->ttl);
+
+            return $this->messageParser->parseMedia($data);
+        });
+    }
+
     /**
      * Purge cache for pages and menus.
      */
@@ -114,11 +147,10 @@ class Wordpress
 
     private function isValidResponse($data): bool
     {
-        if (isset($data['code']) && isset($data['data']['status']) && $data['data']['status'] === 400) {
+        if (isset($data['code']) && isset($data['data']['status']) && 400 === $data['data']['status']) {
             return false;
         }
 
         return !empty($data);
     }
-
 }

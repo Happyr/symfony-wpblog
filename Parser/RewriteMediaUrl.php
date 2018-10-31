@@ -23,26 +23,20 @@ class RewriteMediaUrl implements MediaParserInterface
         $media->setSourceUrl($this->rewriteUrl($media->getSourceUrl()));
     }
 
-    private function rewriteUrl(string $content) :string
+    private function rewriteUrl(string $content): string
     {
-        if (!preg_match_all('|<img[^>]+src=(?P<quote>[\'"])(.+?)(?P=quote)|sim', $content, $matches)) {
+        $remoteUrl = parse_url($this->remoteUrl);
+        $contentUrl = parse_url($content);
+
+        if (!$remoteUrl) {
             return $content;
         }
 
-        $remoteUrl = parse_url($this->remoteUrl);
-
-        for ($i = 0; $i < count($matches[0]); ++$i) {
-            $url = $matches[2][$i];
-            $testUrl = parse_url($url);
-            if (!empty($testUrl['host']) && $testUrl['host'] !== $remoteUrl['host']) {
-                continue;
-            }
-
-            // download the media and store it somewhere good.
-            $replacement = $this->imageUploader->uploadImage($url);
+        if ($contentUrl['host'] && $remoteUrl['host'] === $contentUrl['host']) {
+            $replacement = $this->imageUploader->uploadImage($content);
 
             // rewrite the URL.
-            $content = str_replace($url, $replacement, $content);
+            $content = str_replace($contentUrl, $replacement, $content);
         }
 
         return $content;

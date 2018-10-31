@@ -11,30 +11,27 @@ use PHPUnit\Framework\TestCase;
 
 class RewriteMediaUrlTest extends TestCase
 {
+    const TEST_URL = 'http://wordpress.com/happyr/images/georgos.jpg';
+
     /**
      * @dataProvider urlProvider
      */
-    public function testRewrite($inputUrl, $outputUrl)
+    public function testRewrite($inputUrl)
     {
-        $router = $this->getMockBuilder(ImageUploaderInterface::class)
+        $media = new Media();
+        $media->setSourceUrl(self::TEST_URL);
+        $imageUploader = $this->getMockBuilder(ImageUploaderInterface::class)
             ->setMethods(['uploadImage'])
             ->getMock();
 
-        $media = $this->getMockBuilder(Media::class)
-            ->getMock();
-
-        $media->expects($this->once())
-            ->method('setSourceUrl');
-
-        $parser = new RewriteMediaUrl('http://wordpress.com/wp-conent/uploads/2018/foobar.jpg', $router);
+        $parser = new RewriteMediaUrl($inputUrl, $imageUploader);
         $parser->parseMedia($media);
     }
 
     public function urlProvider()
     {
-        $inputUrl = '<img class="xx" src="http://wordpress.com/wp-conent/uploads/2018/foobar.jpg" />';
-        $outputUrl = '/uploads/foobar.jpg';
+        $inputUrl = 'http://wordpress.com/wp-conent/uploads/2018/foobar.jpg';
 
-        yield [$inputUrl, $outputUrl];
+        yield [$inputUrl];
     }
 }

@@ -95,7 +95,7 @@ class Wordpress
     public function getCategories(string $slug = ''): array
     {
         return $this->cache->get($this->getCacheKey('categories', $slug), function (/*ItemInterface*/ CacheItemInterface $item) use ($slug) {
-            $data = $this->client->get('/wp/v2/categories'.$slug);
+            $data = $this->client->getUri('/wp/v2/categories'.$slug);
             if (!$this->isValidResponse($data)) {
                 $item->expiresAfter(300);
 
@@ -111,7 +111,7 @@ class Wordpress
     public function getMedia(string $slug = ''): array
     {
         return $this->cache->get($this->getCacheKey('media', $slug), function (/*ItemInterface*/ CacheItemInterface $item) use ($slug) {
-            $data = $this->client->get('/wp/v2/media'.$slug);
+            $data = $this->client->getUri('/wp/v2/media'.$slug);
             if (!$this->isValidResponse($data)) {
                 $item->expiresAfter(300);
 
@@ -137,6 +137,8 @@ class Wordpress
         // Get item and force recompute.
         $this->cache->get($this->getCacheKey('page', $identifier), $callback, INF);
         $this->cache->get($this->getCacheKey('menu', $identifier), $callback, INF);
+        $this->cache->get($this->getCacheKey('categories', $identifier), $callback, INF);
+        $this->cache->get($this->getCacheKey('media', $identifier), $callback, INF);
         $this->cache->get($this->getCacheKey('query', $identifier), $callback, INF);
     }
 

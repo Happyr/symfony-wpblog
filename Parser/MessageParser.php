@@ -71,6 +71,9 @@ class MessageParser
     public function parseCategories(array $data): array
     {
         $collection = [];
+        if (isset($data['id'])) {
+            $data = [$data];
+        }
         foreach ($data as $d) {
             try {
                 $category = new Category($d);
@@ -92,6 +95,9 @@ class MessageParser
     public function parseMedia(array $data): array
     {
         $collection = [];
+        if (isset($data['id'])) {
+            $data = [$data];
+        }
         foreach ($data as $d) {
             try {
                 $media = new Media($d);

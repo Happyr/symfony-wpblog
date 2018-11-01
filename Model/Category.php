@@ -59,7 +59,7 @@ class Category
         $this->name = $data['name'];
         $this->slug = $data['slug'];
         $this->taxonomy = $data['taxonomy'];
-        $this->parentId = $data['parentId'];
+        $this->parentId = $data['parent'];
     }
 
     /**

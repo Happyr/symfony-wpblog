@@ -23,8 +23,8 @@ class WordpressExtension extends AbstractExtension
         return [
             new \Twig_SimpleFunction('getWpMenu', [$this->wordpress, 'getMenu']),
             new \Twig_SimpleFunction('getWpPage', [$this->wordpress, 'getPage']),
-            new \Twig_SimpleFunction('getCategoryById', [$this, 'getCategoryById']),
-            new \Twig_SimpleFunction('getMediaById', [$this, 'getMediaById']),
+            new \Twig_SimpleFunction('getWpCategoryById', [$this, 'getCategoryById']),
+            new \Twig_SimpleFunction('getWpMediaById', [$this, 'getMediaById']),
         ];
     }
 

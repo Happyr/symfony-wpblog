@@ -52,7 +52,7 @@ class Page
     public function __construct(array $data = [])
     {
         if (empty($data)) {
-            return;
+            throw new \InvalidArgumentException('You must provide an array with data.');
         }
 
         // Set dates

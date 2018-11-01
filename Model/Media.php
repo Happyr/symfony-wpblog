@@ -28,8 +28,8 @@ class Media
 
     public function __construct(array $data = [])
     {
-        if (empty($data)) {
-            return;
+        if (empty($data) || empty($data['source_url'])) {
+            throw new \InvalidArgumentException('You must provide an array with data.');
         }
 
         $this->id = $data['id'];

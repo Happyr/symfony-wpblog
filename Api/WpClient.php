@@ -75,7 +75,7 @@ class WpClient
     }
 
     /**
-     * Generic get.
+     * Generic GET.
      * @param string $uri example "/wp/v2/categories"
      *
      * @throws \Psr\Http\Client\ClientExceptionInterface

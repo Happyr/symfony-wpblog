@@ -26,7 +26,7 @@ class Media
      */
     private $sourceUrl;
 
-    public function __construct(array $data)
+    public function __construct(array $data = [])
     {
         if (empty($data)) {
             return;
@@ -56,5 +56,10 @@ class Media
     public function getSourceUrl(): string
     {
         return $this->sourceUrl;
+    }
+
+    public function setSourceUrl(string $sourceUrl)
+    {
+        $this->sourceUrl = $sourceUrl;
     }
 }

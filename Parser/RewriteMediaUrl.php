@@ -28,15 +28,15 @@ class RewriteMediaUrl implements MediaParserInterface
         $remoteUrl = parse_url($this->remoteUrl);
         $contentUrl = parse_url($content);
 
-        if (!$remoteUrl) {
+        if (!$contentUrl) {
             return $content;
         }
 
-        if ($contentUrl['host'] && $remoteUrl['host'] === $contentUrl['host']) {
+        if (!empty($contentUrl['host']) && $remoteUrl['host'] === $contentUrl['host']) {
             $replacement = $this->imageUploader->uploadImage($content);
 
             // rewrite the URL.
-            $content = str_replace($contentUrl, $replacement, $content);
+            $content = $replacement;
         }
 
         return $content;

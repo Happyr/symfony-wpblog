@@ -30,3 +30,7 @@ services:
   Happyr\WordpressBundle\Parser\RewriteUrls:
     arguments: ['%happyr_wordpress.remote_url%', '@router']
     tags: ['happyr_wordpress.parser.page']
+
+  Happyr\WordpressBundle\Parser\RewriteMediaUrl:
+    arguments: ['%happyr_wordpress.remote_url%', ~]
+    tags: ['happyr_wordpress.parser.media']

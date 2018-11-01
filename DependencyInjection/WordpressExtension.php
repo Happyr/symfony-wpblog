@@ -5,6 +5,7 @@ namespace Happyr\WordpressBundle\DependencyInjection;
 use Happyr\WordpressBundle\Controller\WordpressController;
 use Happyr\WordpressBundle\Parser\RewriteImageReferences;
 use Happyr\WordpressBundle\Parser\RewriteLinks;
+use Happyr\WordpressBundle\Parser\RewriteMediaUrl;
 use Happyr\WordpressBundle\Parser\RewriteUrls;
 use Happyr\WordpressBundle\Service\LocalImageUploader;
 use Happyr\WordpressBundle\Service\Wordpress;
@@ -63,6 +64,8 @@ class WordpressExtension extends Extension
 
         if ($config['image']['enabled']) {
             $container->getDefinition(RewriteImageReferences::class)
+                ->replaceArgument(1, new Reference($config['image']['uploader']));
+            $container->getDefinition(RewriteMediaUrl::class)
                 ->replaceArgument(1, new Reference($config['image']['uploader']));
         }
     }

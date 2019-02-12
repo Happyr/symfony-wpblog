@@ -42,7 +42,7 @@ class Wordpress
      */
     public function listPosts(string $query = ''): array
     {
-        return $this->cache->get($this->getCacheKey('query', $query), function (/*ItemInterface*/ CacheItemInterface $item) use ($query) {
+        return $this->cache->get($this->getCacheKey('query', $query), function (ItemInterface $item) use ($query) {
             $data = $this->client->getPostList($query);
             if (!$this->isValidResponse($data)) {
                 $item->expiresAfter(30);
@@ -62,7 +62,7 @@ class Wordpress
 
     public function getPage(string $slug): ?Page
     {
-        return $this->cache->get($this->getCacheKey('page', $slug), function (/*ItemInterface*/ CacheItemInterface $item) use ($slug) {
+        return $this->cache->get($this->getCacheKey('page', $slug), function (ItemInterface $item) use ($slug) {
             $data = $this->client->getPage($slug);
             if (!$this->isValidResponse($data)) {
                 $item->expiresAfter(300);
@@ -78,7 +78,7 @@ class Wordpress
 
     public function getMenu(string $slug): ?Menu
     {
-        return $this->cache->get($this->getCacheKey('menu', $slug), function (/*ItemInterface*/ CacheItemInterface $item) use ($slug) {
+        return $this->cache->get($this->getCacheKey('menu', $slug), function (ItemInterface $item) use ($slug) {
             $data = $this->client->getMenu($slug);
             if (!$this->isValidResponse($data)) {
                 $item->expiresAfter(300);
@@ -94,7 +94,7 @@ class Wordpress
 
     public function getCategories(string $slug = ''): array
     {
-        return $this->cache->get($this->getCacheKey('categories', $slug), function (/*ItemInterface*/ CacheItemInterface $item) use ($slug) {
+        return $this->cache->get($this->getCacheKey('categories', $slug), function (ItemInterface $item) use ($slug) {
             $data = $this->client->getUri('/wp/v2/categories'.$slug);
             if (!$this->isValidResponse($data)) {
                 $item->expiresAfter(300);
@@ -110,7 +110,7 @@ class Wordpress
 
     public function getMedia(string $slug = ''): array
     {
-        return $this->cache->get($this->getCacheKey('media', $slug), function (/*ItemInterface*/ CacheItemInterface $item) use ($slug) {
+        return $this->cache->get($this->getCacheKey('media', $slug), function (ItemInterface $item) use ($slug) {
             $data = $this->client->getUri('/wp/v2/media'.$slug);
             if (!$this->isValidResponse($data)) {
                 $item->expiresAfter(300);

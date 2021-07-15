@@ -16,10 +16,9 @@ class RewriteMediaUrlTest extends TestCase
      */
     public function testRewrite($inputUrl, $outputUrl)
     {
-        $media = new Media();
-        $media->setSourceUrl($inputUrl);
+        $media = new Media(['source_url' => $inputUrl, 'id' => 'abc', 'link' => 'http://wordpress.com/media/abc.png', 'slug' => 'abc1']);
         $imageUploader = $this->getMockBuilder(ImageUploaderInterface::class)
-            ->setMethods(['uploadImage'])
+            ->onlyMethods(['uploadImage'])
             ->getMock();
 
         $imageUploader->method('uploadImage')->willReturn($outputUrl);

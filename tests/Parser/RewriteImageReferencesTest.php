@@ -17,14 +17,17 @@ class RewriteImageReferencesTest extends TestCase
     public function testRewrite($apiUrl, $input, $inputUrl, $output, $outputUrl)
     {
         $router = $this->getMockBuilder(ImageUploaderInterface::class)
-            ->setMethods(['uploadImage'])
+            ->onlyMethods(['uploadImage'])
             ->getMock();
         $router->expects($this->once())
             ->method('uploadImage')
             ->with($inputUrl)
             ->willReturn($outputUrl);
 
-        $page = $this->getMockBuilder(Page::class)->getMock();
+        $page = $this->getMockBuilder(Page::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getContent', 'setContent', 'getExcerpt', 'setExcerpt'])
+            ->getMock();
         $page->expects($this->once())
             ->method('getContent')
             ->willReturn($input);

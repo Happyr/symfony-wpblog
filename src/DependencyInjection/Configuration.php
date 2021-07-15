@@ -18,8 +18,8 @@ class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $root = $treeBuilder->root('wordpress');
+        $treeBuilder = new TreeBuilder('wordpress');
+        $root = $treeBuilder->getRootNode();
 
         $root->children()
             ->scalarNode('url')->cannotBeEmpty()->isRequired()->end()

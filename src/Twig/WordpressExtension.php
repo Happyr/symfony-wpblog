@@ -8,6 +8,7 @@ use Happyr\WordpressBundle\Model\Category;
 use Happyr\WordpressBundle\Model\Media;
 use Happyr\WordpressBundle\Service\Wordpress;
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 class WordpressExtension extends AbstractExtension
 {
@@ -21,10 +22,10 @@ class WordpressExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('getWpMenu', [$this->wordpress, 'getMenu']),
-            new \Twig_SimpleFunction('getWpPage', [$this->wordpress, 'getPage']),
-            new \Twig_SimpleFunction('getWpCategoryById', [$this, 'getCategoryById']),
-            new \Twig_SimpleFunction('getWpMediaById', [$this, 'getMediaById']),
+            new TwigFunction('getWpMenu', [$this->wordpress, 'getMenu']),
+            new TwigFunction('getWpPage', [$this->wordpress, 'getPage']),
+            new TwigFunction('getWpCategoryById', [$this, 'getCategoryById']),
+            new TwigFunction('getWpMediaById', [$this, 'getMediaById']),
         ];
     }
 

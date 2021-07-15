@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Happyr\WordpressBundle\Service;
 
 use Happyr\WordpressBundle\Api\WpClient;
-use Happyr\WordpressBundle\Model\Category;
 use Happyr\WordpressBundle\Model\Menu;
 use Happyr\WordpressBundle\Model\Page;
 use Happyr\WordpressBundle\Parser\MessageParser;
-use Psr\Cache\CacheItemInterface;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 

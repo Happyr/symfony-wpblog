@@ -46,7 +46,7 @@ class RewriteLinks implements PageParserInterface, MenuParserInterface
             if (empty($testUrl['host']) || $testUrl['host'] !== $remoteUrl['host']) {
                 continue;
             }
-            if (preg_match('@/page/(.*)@si', $testUrl['path'], $urlMatch)) {
+            if (preg_match('@/(?:page|post)/(.*)@si', $testUrl['path'], $urlMatch)) {
                 $replacement = $this->urlGenerator->generate('happyr_wordpress_page', ['slug' => $urlMatch[1]]);
                 $content = str_replace($url, $replacement, $content);
             }

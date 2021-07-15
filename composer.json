@@ -17,12 +17,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Happyr\\WordpressBundle\\": "src"
+            "Happyr\\WordpressBundle\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Happyr\\WordpressBundle\\Tests{{": "tests"
+            "Happyr\\WordpressBundle\\Tests\\": "tests/"
         }
     }
 }

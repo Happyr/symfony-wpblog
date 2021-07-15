@@ -7,6 +7,7 @@ namespace Happyr\WordpressBundle\Tests\Parser;
 use Happyr\WordpressBundle\Model\Page;
 use Happyr\WordpressBundle\Parser\RewriteLinks;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RewriteLinksTest extends TestCase
@@ -16,15 +17,19 @@ class RewriteLinksTest extends TestCase
      */
     public function testRewrite($input, $output, $apiUrl, $newUrl, $routeParams)
     {
-        $router = $this->getMockBuilder(UrlGeneratorInterface::class)
-            ->setMethods(['generate'])
+        $router = $this->getMockBuilder(UrlGenerator::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['generate'])
             ->getMock();
         $router->expects($this->once())
             ->method('generate')
             ->with('happyr_wordpress_page', $routeParams)
             ->willReturn($newUrl);
 
-        $page = $this->getMockBuilder(Page::class)->getMock();
+        $page = $this->getMockBuilder(Page::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getContent', 'setContent', 'getExcerpt', 'setExcerpt'])
+            ->getMock();
         $page->expects($this->once())
             ->method('getContent')
             ->willReturn($input);

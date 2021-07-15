@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.8.1@f73f2299dbc59a3e6c4d66cff4605176e728ee69">
+  <file src="src/DependencyInjection/Configuration.php">
+    <PossiblyUndefinedMethod occurrences="1">
+      <code>children</code>
+    </PossiblyUndefinedMethod>
+  </file>
+  <file src="src/DependencyInjection/WordpressExtension.php">
+    <PossiblyNullArgument occurrences="1">
+      <code>$configuration</code>
+    </PossiblyNullArgument>
+  </file>
+  <file src="src/Parser/RewriteImageReferences.php">
+    <PossiblyUndefinedArrayOffset occurrences="1">
+      <code>$remoteUrl['host']</code>
+    </PossiblyUndefinedArrayOffset>
+  </file>
+  <file src="src/Parser/RewriteLinks.php">
+    <PossiblyUndefinedArrayOffset occurrences="2">
+      <code>$remoteUrl['host']</code>
+      <code>$testUrl['path']</code>
+    </PossiblyUndefinedArrayOffset>
+  </file>
+  <file src="src/Parser/RewriteMediaUrl.php">
+    <PossiblyUndefinedArrayOffset occurrences="1">
+      <code>$remoteUrl['host']</code>
+    </PossiblyUndefinedArrayOffset>
+  </file>
+</files>

@@ -5,17 +5,10 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    errorBaseline="psalm.baseline.xml"
 >
     <projectFiles>
-        <directory name="Api" />
-        <directory name="Controller" />
-        <directory name="DependencyInjection" />
-        <directory name="Model" />
-        <directory name="Parser" />
-        <directory name="Service" />
-        <directory name="Tests" />
-        <directory name="Twig" />
-        <file name="WordpressBundle.php" />
+        <directory name="src" />
         <ignoreFiles>
             <directory name="vendor" />
         </ignoreFiles>

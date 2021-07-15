@@ -31,7 +31,7 @@ class WordpressExtension extends Extension
         $remoteUrl = rtrim($config['url'], '/');
         $container->setParameter('happyr_wordpress.remote_url', $remoteUrl);
 
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yaml');
 
         if ($config['controller']['enabled']) {

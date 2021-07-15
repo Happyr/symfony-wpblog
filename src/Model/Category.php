@@ -70,49 +70,31 @@ class Category
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
     public function getCount(): int
     {
         return $this->count;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @return string
-     */
     public function getLink(): string
     {
         return $this->link;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getSlug(): string
     {
         return $this->slug;
     }
 
-    /**
-     * @return string
-     */
     public function getTaxonomy(): string
     {
         return $this->taxonomy;

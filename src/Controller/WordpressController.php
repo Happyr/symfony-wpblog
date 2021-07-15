@@ -19,14 +19,12 @@ final class WordpressController extends AbstractController
     private $wordpress;
     private $indexTemplate;
     private $pageTemplate;
-    private $allowInvalidate;
 
-    public function __construct(Wordpress $wordpress, string $indexTemplate, string $pageTemplate, bool $allowInvalidate)
+    public function __construct(Wordpress $wordpress, string $indexTemplate, string $pageTemplate)
     {
         $this->wordpress = $wordpress;
         $this->indexTemplate = $indexTemplate;
         $this->pageTemplate = $pageTemplate;
-        $this->allowInvalidate = $allowInvalidate;
     }
 
     public function index()

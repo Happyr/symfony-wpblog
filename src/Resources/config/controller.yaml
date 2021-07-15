@@ -1,4 +1,5 @@
 services:
     Happyr\WordpressBundle\Controller\WordpressController:
+        autowire: true
+        autoconfigure: true
         arguments: ['@Happyr\WordpressBundle\Service\Wordpress', ~, ~, ~]
-        tags: ['controller.service_arguments']

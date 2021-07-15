@@ -42,7 +42,7 @@ class LocalImageUploader implements ImageUploaderInterface
         // Check if file already exists
         if (!\file_exists($path)) {
             // Save the file
-            \mkdir(dirname($path));
+            @\mkdir(\dirname($path));
             \file_put_contents($path, $file);
         }
 

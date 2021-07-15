@@ -8,7 +8,6 @@ use Happyr\WordpressBundle\Model\Page;
 use Happyr\WordpressBundle\Parser\RewriteUrls;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\Generator\UrlGenerator;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RewriteUrlsTest extends TestCase
 {

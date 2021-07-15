@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Happyr\WordpressBundle\Controller;
 
 use Happyr\WordpressBundle\Service\Wordpress;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -13,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-final class WordpressController extends Controller
+final class WordpressController extends AbstractController
 {
     private $wordpress;
     private $indexTemplate;

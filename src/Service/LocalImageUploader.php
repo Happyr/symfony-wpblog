@@ -29,18 +29,17 @@ class LocalImageUploader implements ImageUploaderInterface
 
     public function uploadImage(string $url): string
     {
-        //Download the file
-        $file = @\file_get_contents($url);
-        if (false === $file) {
-            return '';
-        }
-
         $filename = \basename($url);
-
         $path = \sprintf('%s/%s', $this->uploadsFolder, $filename);
 
         // Check if file already exists
         if (!\file_exists($path)) {
+            //Download the file
+            $file = @\file_get_contents($url);
+            if (false === $file) {
+                return '';
+            }
+
             // Save the file
             @\mkdir(\dirname($path));
             \file_put_contents($path, $file);

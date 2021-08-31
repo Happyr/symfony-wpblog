@@ -48,6 +48,10 @@ class Page
     private $categories;
     /** @var array */
     private $tags;
+    /** @var array */
+    private $acf;
+    /** @var array */
+    private $yoastHeadJson;
 
     public function __construct(array $data = [])
     {
@@ -89,6 +93,8 @@ class Page
         $this->meta = $data['meta'];
         $this->categories = $data['categories'];
         $this->tags = $data['tags'];
+        $this->acf = $data['acf'] ?? [];
+        $this->yoastHeadJson = $data['yoast_head_json'] ?? [];
     }
 
     public function getId(): int
@@ -300,4 +306,45 @@ class Page
     {
         $this->tags = $tags;
     }
+
+    /**
+     * Get the value of acf
+     */ 
+    public function getAcf(): ?array
+    {
+        return $this->acf;
+    }
+
+    /**
+     * Set the value of acf
+     *
+     * @return  self
+     */ 
+    public function setAcf(?array $acf)
+    {
+        $this->acf = $acf;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of yoastHeadJson
+     */ 
+    public function getYoastHeadJson(): ?array
+    {
+        return $this->yoastHeadJson;
+    }
+
+    /**
+     * Set the value of yoastHeadJson
+     *
+     * @return  self
+     */ 
+    public function setYoastHeadJson(?array $yoastHeadJson)
+    {
+        $this->yoastHeadJson = $yoastHeadJson;
+
+        return $this;
+    }
+
 }

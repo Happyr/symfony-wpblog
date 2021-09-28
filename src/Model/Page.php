@@ -87,12 +87,12 @@ class Page
         $this->featuredMedia = $data['featured_media'];
         $this->commentStatus = $data['comment_status'];
         $this->pingStatus = $data['ping_status'];
-        $this->sticky = $data['sticky'];
+        $this->sticky = $data['sticky'] ?? false;
         $this->template = $data['template'];
-        $this->format = $data['format'];
-        $this->meta = $data['meta'];
-        $this->categories = $data['categories'];
-        $this->tags = $data['tags'];
+        $this->format = $data['format'] ?? null;
+        $this->meta = $data['meta'] ?? null;
+        $this->categories = $data['categories'] ?? null;
+        $this->tags = $data['tags'] ?? null;
         $this->acf = $data['acf'] ?? [];
         $this->yoastHeadJson = $data['yoast_head_json'] ?? [];
     }

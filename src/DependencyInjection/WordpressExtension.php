@@ -23,7 +23,7 @@ class WordpressExtension extends Extension
     /**
      * {@inheritdoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = $this->getConfiguration($configs, $container);
         $config = $this->processConfiguration($configuration, $configs);
@@ -53,7 +53,7 @@ class WordpressExtension extends Extension
         $this->configureParsers($container, $config['parser']);
     }
 
-    private function configureParsers(ContainerBuilder $container, array $config)
+    private function configureParsers(ContainerBuilder $container, array $config): void
     {
         $parsers = ['image' => RewriteImageReferences::class, 'link' => RewriteLinks::class, 'url' => RewriteUrls::class];
         foreach ($parsers as $key => $serviceId) {
